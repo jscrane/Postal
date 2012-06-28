@@ -1,9 +1,8 @@
-package org.syzygy.postal.action.midp;
+package org.syzygy.postal.action;
 
-import org.syzygy.postal.action.*;
 import org.syzygy.postal.io.AbstractTransport;
 import org.syzygy.postal.io.EventListener;
-import org.syzygy.postal.io.midp.RmsGame;
+import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.model.Move;
 import org.syzygy.postal.ui.MainDisplay;
@@ -105,7 +104,7 @@ public final class DistributedGameController extends VisualGameController implem
         return state.isGameStarted() && !state.isGameEnded();
     }
 
-    public void save(String name, RmsGame rms)
+    public void save(String name, Persistence rms)
     {
         rms.save(name, getMoves(), partner.toString() + " " + main.getColour() + " " + state.getId());
     }

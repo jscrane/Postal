@@ -1,10 +1,11 @@
 package org.syzygy.postal;
 
+import org.syzygy.postal.action.DistributedGameController;
 import org.syzygy.postal.action.State;
 import org.syzygy.postal.action.StateChangeListener;
-import org.syzygy.postal.action.midp.DistributedGameController;
 import org.syzygy.postal.io.AbstractTransport;
 import org.syzygy.postal.io.EventListener;
+import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.Filer;
 import org.syzygy.postal.io.midp.RmsGame;
 import org.syzygy.postal.model.Colour;
@@ -208,7 +209,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
     private final Display display;
     private final String name;
     private final Filer filer;
-    private final RmsGame rms = new RmsGame();
+    private final Persistence rms = new RmsGame();
     private final TextField fileName = new TextField(null, null, 64, TextField.ANY);
     private final Screen exportDialog = new Form("Export PGN...", new Item[]{ fileName });
     private final Screen saveDialog = new Alert("Save...", "Save game for next time?", null, AlertType.CONFIRMATION);

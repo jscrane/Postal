@@ -1,5 +1,7 @@
 package org.syzygy.postal.io.midp;
 
+import org.syzygy.postal.io.Persistence;
+
 import javax.microedition.rms.RecordComparator;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
@@ -7,7 +9,7 @@ import javax.microedition.rms.RecordStoreException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-public final class RmsGame
+public final class RmsGame implements Persistence
 {
     private interface Operation
     {
