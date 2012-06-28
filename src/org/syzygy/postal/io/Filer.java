@@ -45,24 +45,9 @@ public final class Filer
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (out != null)
-                try {
-                    out.close();
-                } catch (IOException _) {
-                    // ignored
-                }
-            if (file != null)
-                try {
-                    file.close();
-                } catch (IOException _) {
-                    // ignored
-                }
-            if (dir != null)
-                try {
-                    dir.close();
-                } catch (IOException _) {
-                    // ignored
-                }
+            Util.closeQuietly(out);
+            Util.closeQuietly(file);
+            Util.closeQuietly(dir);
         }
     }
 
@@ -96,12 +81,7 @@ public final class Filer
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (dir != null)
-                try {
-                    dir.close();
-                } catch (IOException _) {
-                    // ignored
-                }
+            Util.closeQuietly(dir);
         }
     }
 
@@ -139,18 +119,8 @@ public final class Filer
             e.printStackTrace();
             operation.complete(null);
         } finally {
-            if (in != null)
-                try {
-                    in.close();
-                } catch (IOException _) {
-                    // ignored
-                }
-            if (file != null)
-                try {
-                    file.close();
-                } catch (IOException _) {
-                    // ignored
-                }
+            Util.closeQuietly(in);
+            Util.closeQuietly(file);
         }
     }
 

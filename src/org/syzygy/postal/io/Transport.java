@@ -62,14 +62,8 @@ public abstract class Transport
 
     public synchronized void close()
     {
-        if (conn != null)
-            try {
-                conn.close();
-            } catch (IOException _) {
-                // ignored
-            } finally {
-                conn = null;
-            }
+        Util.closeQuietly(conn);
+        conn = null;
     }
 
     private String remoteAddress;

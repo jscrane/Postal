@@ -87,24 +87,9 @@ public final class BluetoothTransport extends Transport
     public void close()
     {
         super.close();
-        if (notifier != null)
-            try {
-                notifier.close();
-            } catch (IOException _) {
-                // ignored
-            }
-        if (input != null)
-            try {
-                input.close();
-            } catch (IOException _) {
-                // ignored
-            }
-        if (output != null)
-            try {
-                output.close();
-            } catch (IOException _) {
-                // ignored
-            }
+        Util.closeQuietly(notifier);
+        Util.closeQuietly(input);
+        Util.closeQuietly(output);
     }
 
     private StreamConnectionNotifier notifier;
