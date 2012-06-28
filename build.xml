@@ -24,9 +24,9 @@
     <property name="board.midlet.name" value="Board"/>
     <property name="midlet.port" value="16161"/>
     <property name="midlet.uuid" value="3d37729712fb58c39d9f21b9ec992474"/>
-    <property name="sms.midlet.class" value="org.syzygy.postal.SmsMIDlet"/>
-    <property name="bluetooth.midlet.class" value="org.syzygy.postal.BluetoothMIDlet"/>
-    <property name="board.midlet.class" value="org.syzygy.postal.BoardMIDlet"/>
+    <property name="sms.midlet.class" value="postal.SmsMIDlet"/>
+    <property name="bluetooth.midlet.class" value="postal.BluetoothMIDlet"/>
+    <property name="board.midlet.class" value="postal.BoardMIDlet"/>
 
     <taskdef resource="antenna.properties" classpath="${antenna.home}/antenna-bin.jar"/>
 
@@ -172,7 +172,7 @@
     </target>
 
     <target name="run.smstest">
-        <run.midlet midlet="org.syzygy.postal.SmsTest"/>
+        <run.midlet midlet="postal.SmsTest"/>
     </target>
 
     <target name="all" depends="run.tests,package,run.board"/>
