@@ -24,9 +24,9 @@
     <property name="board.midlet.name" value="Board"/>
     <property name="midlet.port" value="16161"/>
     <property name="midlet.uuid" value="3d37729712fb58c39d9f21b9ec992474"/>
-    <property name="sms.midlet.class" value="postal.SmsMIDlet"/>
-    <property name="bluetooth.midlet.class" value="postal.BluetoothMIDlet"/>
-    <property name="board.midlet.class" value="postal.BoardMIDlet"/>
+    <property name="sms.midlet.class" value="org.syzygy.postal.SmsMIDlet"/>
+    <property name="bluetooth.midlet.class" value="org.syzygy.postal.BluetoothMIDlet"/>
+    <property name="board.midlet.class" value="org.syzygy.postal.BoardMIDlet"/>
 
     <taskdef resource="antenna.properties" classpath="${antenna.home}/antenna-bin.jar"/>
 
@@ -50,7 +50,8 @@
 
     <target name="compile" depends="init">
         <wtkbuild destdir="build/classes" deprecation="on" preverify="false" source="1.2">
-            <src path="src"/>
+            <src path="common/src"/>
+            <src path="midp/src"/>
             <classpath refid="midlet.compile.path"/>
         </wtkbuild>
     </target>
@@ -99,7 +100,9 @@
     </target>
 
     <target name="compile.tests" depends="compile">
-        <javac srcdir="tests" destdir="build/tests" deprecation="on" debug="on">
+        <javac destdir="build/tests" deprecation="on" debug="on">
+            <src path="common/tests"/>
+            <src path="midp/tests"/>
             <classpath>
                 <path refid="midlet.compile.path"/>
                 <pathelement path="build/classes"/>
