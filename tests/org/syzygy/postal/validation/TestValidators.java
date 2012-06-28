@@ -1,0 +1,16 @@
+package org.syzygy.postal.validation;
+
+import junit.framework.TestCase;
+import org.syzygy.postal.model.Board;
+import org.syzygy.postal.model.Move;
+
+public final class TestValidators extends TestCase
+{
+    public void testWhiteOpeningE2E4() throws Exception
+    {
+        v.validate(board, Move.valueOf("e2-e4"));
+    }
+
+    private final Board board = Board.create();
+    private final Validators v = new Validators();
+}

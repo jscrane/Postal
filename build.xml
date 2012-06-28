@@ -1,193 +1,193 @@
 <?xml version="1.0"?>
 
 <!DOCTYPE project PUBLIC "-//ANT//DTD project//EN" "etc/project.dtd" [
-]>
+        ]>
 
 <project name="Postal" default="all">
 
-	<property environment="env"/>
-	<property name="packages" value="${env.PACKAGES}"/>
-	<fail message="Please set PACKAGES" unless="env.PACKAGES"/>
-	<condition property="wtk.home" value="${packages}/wtk/2.5.2" else="C:/Program Files/Java/wtk2.5.2">
-		<os family="unix"/>
-	</condition>
-	<property name="wtk.bluetooth.enabled" value="true"/>
-	<property name="wtk.cldc.version" value="1.1"/>
-	<property name="wtk.midp.version" value="2.0"/>
-	<property name="wtk.proguard.home" value="${packages}/proguard/4.1"/>
-	<property name="antenna.home" value="${packages}/antenna/0.9.14/dist"/>
-	<property name="junit.home" value="${packages}/junit/4.4"/>
-	<property name="jmock.home" value="${packages}/jmock/2.4.0"/>
-	<property name="suite.name" value="postal"/>
-	<property name="sms.midlet.name" value="Postal"/>
-	<property name="bluetooth.midlet.name" value="Local"/>
-	<property name="board.midlet.name" value="Board"/>
-	<property name="midlet.port" value="16161"/>
-	<property name="midlet.uuid" value="3d37729712fb58c39d9f21b9ec992474"/>
-	<property name="sms.midlet.class" value="org.syzygy.chessms.SmsMIDlet"/>
-	<property name="bluetooth.midlet.class" value="org.syzygy.chessms.BluetoothMIDlet"/>
-	<property name="board.midlet.class" value="org.syzygy.chessms.BoardMIDlet"/>
+    <property environment="env"/>
+    <property name="packages" value="${env.PACKAGES}"/>
+    <fail message="Please set PACKAGES" unless="env.PACKAGES"/>
+    <condition property="wtk.home" value="${packages}/wtk/2.5.2" else="C:/Program Files/Java/wtk2.5.2">
+        <os family="unix"/>
+    </condition>
+    <property name="wtk.bluetooth.enabled" value="true"/>
+    <property name="wtk.cldc.version" value="1.1"/>
+    <property name="wtk.midp.version" value="2.0"/>
+    <property name="wtk.proguard.home" value="${packages}/proguard/4.1"/>
+    <property name="antenna.home" value="${packages}/antenna/0.9.14/dist"/>
+    <property name="junit.home" value="${packages}/junit/4.4"/>
+    <property name="jmock.home" value="${packages}/jmock/2.4.0"/>
+    <property name="suite.name" value="postal"/>
+    <property name="sms.midlet.name" value="Postal"/>
+    <property name="bluetooth.midlet.name" value="Local"/>
+    <property name="board.midlet.name" value="Board"/>
+    <property name="midlet.port" value="16161"/>
+    <property name="midlet.uuid" value="3d37729712fb58c39d9f21b9ec992474"/>
+    <property name="sms.midlet.class" value="org.syzygy.postal.SmsMIDlet"/>
+    <property name="bluetooth.midlet.class" value="org.syzygy.postal.BluetoothMIDlet"/>
+    <property name="board.midlet.class" value="org.syzygy.postal.BoardMIDlet"/>
 
-	<taskdef resource="antenna.properties" classpath="${antenna.home}/antenna-bin.jar"/>
+    <taskdef resource="antenna.properties" classpath="${antenna.home}/antenna-bin.jar"/>
 
-	<target name="init">
-		<mkdir dir="build"/>
-		<mkdir dir="build/classes"/>
-		<mkdir dir="build/tests"/>
-		<mkdir dir="build/results"/>
-		<tstamp/>
-	</target>
+    <target name="init">
+        <mkdir dir="build"/>
+        <mkdir dir="build/classes"/>
+        <mkdir dir="build/tests"/>
+        <mkdir dir="build/results"/>
+        <tstamp/>
+    </target>
 
-	<path id="midlet.compile.path">
-		<fileset dir="${wtk.home}/lib">
-			<include name="jsr75.jar"/>
-			<!-- file-connection -->
-			<include name="wma20.jar"/>
-			<!-- mobile-messaging -->
-			<include name="cldcapi11.jar"/>
-		</fileset>
-	</path>
+    <path id="midlet.compile.path">
+        <fileset dir="${wtk.home}/lib">
+            <include name="jsr75.jar"/>
+            <!-- file-connection -->
+            <include name="wma20.jar"/>
+            <!-- mobile-messaging -->
+            <include name="cldcapi11.jar"/>
+        </fileset>
+    </path>
 
-	<target name="compile" depends="init">
-		<wtkbuild destdir="build/classes" deprecation="on" preverify="false" source="1.2">
-			<src path="src"/>
-			<classpath refid="midlet.compile.path"/>
-		</wtkbuild>
-	</target>
+    <target name="compile" depends="init">
+        <wtkbuild destdir="build/classes" deprecation="on" preverify="false" source="1.2">
+            <src path="src"/>
+            <classpath refid="midlet.compile.path"/>
+        </wtkbuild>
+    </target>
 
-	<target name="package" depends="compile">
-		<wtkjad jadfile="build/${suite.name}.jad"
-            name="${suite.name}" vendor="Stephen Crane" update="true" autoversion="true">
-			<midlet name="${sms.midlet.name}" icon="chess_sms.png" class="${sms.midlet.class}"/>
-			<midlet name="${bluetooth.midlet.name}" icon="chess_bt.png" class="${bluetooth.midlet.class}"/>
-			<midlet name="${board.midlet.name}" icon="chess.png" class="${board.midlet.class}"/>
-			<!--midlet name="SmsTest" class="org.syzygy.chessms.SmsTest"/-->
+    <target name="package" depends="compile">
+        <wtkjad jadfile="build/${suite.name}.jad"
+                name="${suite.name}" vendor="Stephen Crane" update="true" autoversion="true">
+            <midlet name="${sms.midlet.name}" icon="chess_sms.png" class="${sms.midlet.class}"/>
+            <midlet name="${bluetooth.midlet.name}" icon="chess_bt.png" class="${bluetooth.midlet.class}"/>
+            <midlet name="${board.midlet.name}" icon="chess.png" class="${board.midlet.class}"/>
+            <!--midlet name="SmsTest" class="org.syzygy.postalSmsTest"/-->
 
-			<attribute name="postal.name" value="${sms.midlet.name}"/>
-			<attribute name="board.name" value="${board.midlet.name}"/>
-			<attribute name="midlet.directory" value="e:/chess"/>
-			<attribute name="midlet.port" value="${midlet.port}"/>
-			<attribute name="midlet.uuid" value="${midlet.uuid}"/>
-			<attribute name="MIDlet-Push-1" value="sms://:${midlet.port}, ${sms.midlet.class}, *"/>
-		</wtkjad>
-		<wtkpackage jarfile="build/${suite.name}.jar"
-                jadfile="build/${suite.name}.jad"
-                preverify="true" obfuscate="true">
-			<fileset dir="build/classes"/>
-			<fileset dir="etc/images">
-				<include name="28/*"/>
-				<include name="20/*"/>
-			</fileset>
-			<fileset dir="etc" includes="*.png"/>
-			<classpath>
-				<pathelement path="${wtk.home}/lib/wma20.jar"/>
-			</classpath>
-		</wtkpackage>
-	</target>
+            <attribute name="postal.name" value="${sms.midlet.name}"/>
+            <attribute name="board.name" value="${board.midlet.name}"/>
+            <attribute name="midlet.directory" value="e:/chess"/>
+            <attribute name="midlet.port" value="${midlet.port}"/>
+            <attribute name="midlet.uuid" value="${midlet.uuid}"/>
+            <attribute name="MIDlet-Push-1" value="sms://:${midlet.port}, ${sms.midlet.class}, *"/>
+        </wtkjad>
+        <wtkpackage jarfile="build/${suite.name}.jar"
+                    jadfile="build/${suite.name}.jad"
+                    preverify="true" obfuscate="true">
+            <fileset dir="build/classes"/>
+            <fileset dir="etc/images">
+                <include name="28/*"/>
+                <include name="20/*"/>
+            </fileset>
+            <fileset dir="etc" includes="*.png"/>
+            <classpath>
+                <pathelement path="${wtk.home}/lib/wma20.jar"/>
+            </classpath>
+        </wtkpackage>
+    </target>
 
-	<target name="jdepend" depends="compile">
-		<jdepend format="xml" outputfile="build/results/jdepend.xml">
-			<exclude name="java.*"/>
-			<exclude name="javax.*"/>
-			<classespath>
-				<pathelement location="build/classes"/>
-			</classespath>
-			<classpath location="build"/>
-		</jdepend>
-		<xslt basedir="build/results" destdir="build/results"
-          includes="jdepend.xml" style="${ant.home}/etc/jdepend.xsl"/>
-	</target>
+    <target name="jdepend" depends="compile">
+        <jdepend format="xml" outputfile="build/results/jdepend.xml">
+            <exclude name="java.*"/>
+            <exclude name="javax.*"/>
+            <classespath>
+                <pathelement location="build/classes"/>
+            </classespath>
+            <classpath location="build"/>
+        </jdepend>
+        <xslt basedir="build/results" destdir="build/results"
+              includes="jdepend.xml" style="${ant.home}/etc/jdepend.xsl"/>
+    </target>
 
-	<target name="compile.tests" depends="compile">
-		<javac srcdir="tests" destdir="build/tests" deprecation="on" debug="on">
-			<classpath>
-				<path refid="midlet.compile.path"/>
-				<pathelement path="build/classes"/>
-				<pathelement path="${junit.home}/junit.jar"/>
-				<pathelement path="${jmock.home}/jmock-2.4.0.jar"/>
-				<pathelement path="${wtk.home}/lib/midpapi20.jar"/>
-			</classpath>
-		</javac>
-	</target>
+    <target name="compile.tests" depends="compile">
+        <javac srcdir="tests" destdir="build/tests" deprecation="on" debug="on">
+            <classpath>
+                <path refid="midlet.compile.path"/>
+                <pathelement path="build/classes"/>
+                <pathelement path="${junit.home}/junit.jar"/>
+                <pathelement path="${jmock.home}/jmock-2.4.0.jar"/>
+                <pathelement path="${wtk.home}/lib/midpapi20.jar"/>
+            </classpath>
+        </javac>
+    </target>
 
-	<target name="run.tests" depends="compile.tests,jdepend">
-		<junit printsummary="yes" haltonfailure="true" haltonerror="true" showoutput="false">
-			<classpath>
-				<pathelement path="build/classes"/>
-				<pathelement path="build/tests"/>
-				<pathelement path="${junit.home}/junit.jar"/>
-				<pathelement path="${jmock.home}/jmock-2.4.0.jar"/>
-				<pathelement path="${jmock.home}/hamcrest-library-1.1.jar"/>
-				<path refid="midlet.compile.path"/>
-			</classpath>
-			<formatter type="plain"/>
-			<formatter type="xml"/>
-			<batchtest todir="build/results">
-				<fileset dir="build/tests">
-					<include name="**/Test*.class"/>
-					<exclude name="**/Test*$*.class"/>
-				</fileset>
-			</batchtest>
-		</junit>
-		<junitreport todir="build/results">
-			<fileset dir="build/results">
-				<include name="TEST-*.xml"/>
-			</fileset>
-			<report format="frames" todir="build/results"/>
-		</junitreport>
-	</target>
+    <target name="run.tests" depends="compile.tests,jdepend">
+        <junit printsummary="yes" haltonfailure="true" haltonerror="true" showoutput="false">
+            <classpath>
+                <pathelement path="build/classes"/>
+                <pathelement path="build/tests"/>
+                <pathelement path="${junit.home}/junit.jar"/>
+                <pathelement path="${jmock.home}/jmock-2.4.0.jar"/>
+                <pathelement path="${jmock.home}/hamcrest-library-1.1.jar"/>
+                <path refid="midlet.compile.path"/>
+            </classpath>
+            <formatter type="plain"/>
+            <formatter type="xml"/>
+            <batchtest todir="build/results">
+                <fileset dir="build/tests">
+                    <include name="**/Test*.class"/>
+                    <exclude name="**/Test*$*.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="build/results">
+            <fileset dir="build/results">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="build/results"/>
+        </junitreport>
+    </target>
 
-	<macrodef name="run.midlet">
-		<attribute name="midlet"/>
-		<attribute name="device" default="DefaultColorPhone"/>
-		<sequential>
-			<exec executable="${wtk.home}/bin/emulator">
-				<arg value="-Xdescriptor:build/${suite.name}.jad"/>
-				<arg value="-Xdevice:@{device}"/>
-				<arg value="-cp"/>
-				<arg value="build/${suite.name}.jar"/>
-				<arg value="@{midlet}"/>
-			</exec>
-		</sequential>
-	</macrodef>
+    <macrodef name="run.midlet">
+        <attribute name="midlet"/>
+        <attribute name="device" default="DefaultColorPhone"/>
+        <sequential>
+            <exec executable="${wtk.home}/bin/emulator">
+                <arg value="-Xdescriptor:build/${suite.name}.jad"/>
+                <arg value="-Xdevice:@{device}"/>
+                <arg value="-cp"/>
+                <arg value="build/${suite.name}.jar"/>
+                <arg value="@{midlet}"/>
+            </exec>
+        </sequential>
+    </macrodef>
 
-	<target name="run.bt1">
-		<run.midlet midlet="${bluetooth.midlet.class}"/>
-	</target>
+    <target name="run.bt1">
+        <run.midlet midlet="${bluetooth.midlet.class}"/>
+    </target>
 
-	<target name="run.bt2">
-		<run.midlet midlet="${bluetooth.midlet.class}" device="DefaultGrayPhone"/>
-	</target>
+    <target name="run.bt2">
+        <run.midlet midlet="${bluetooth.midlet.class}" device="DefaultGrayPhone"/>
+    </target>
 
-	<target name="run.sms1">
-		<run.midlet midlet="${sms.midlet.class}"/>
-	</target>
+    <target name="run.sms1">
+        <run.midlet midlet="${sms.midlet.class}"/>
+    </target>
 
-	<target name="run.sms2">
-		<run.midlet midlet="${sms.midlet.class}" device="DefaultGrayPhone"/>
-	</target>
+    <target name="run.sms2">
+        <run.midlet midlet="${sms.midlet.class}" device="DefaultGrayPhone"/>
+    </target>
 
-	<target name="run.board">
-		<run.midlet midlet="${board.midlet.class}"/>
-	</target>
+    <target name="run.board">
+        <run.midlet midlet="${board.midlet.class}"/>
+    </target>
 
-	<target name="run.smstest">
-		<run.midlet midlet="org.syzygy.chessms.SmsTest"/>
-	</target>
+    <target name="run.smstest">
+        <run.midlet midlet="org.syzygy.postal.SmsTest"/>
+    </target>
 
-	<target name="all" depends="run.tests,package,run.board"/>
+    <target name="all" depends="run.tests,package,run.board"/>
 
-	<target name="clean">
-		<delete includeemptydirs="true">
-			<fileset dir="build">
-				<include name="**/*"/>
-				<exclude name="${suite.name}.jad"/>
-			</fileset>
-		</delete>
-	</target>
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="build">
+                <include name="**/*"/>
+                <exclude name="${suite.name}.jad"/>
+            </fileset>
+        </delete>
+    </target>
 
-	<target name="realclean" depends="clean">
-		<delete dir="build"/>
-	</target>
+    <target name="realclean" depends="clean">
+        <delete dir="build"/>
+    </target>
 
 </project>
