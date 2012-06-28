@@ -2,8 +2,7 @@ package org.syzygy.chessms.model;
 
 import junit.framework.TestCase;
 
-public class TestPiece
-    extends TestCase
+public final class TestPiece extends TestCase
 {
     public void testPiece()
     {

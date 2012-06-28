@@ -3,38 +3,36 @@ package org.syzygy.chessms.validation;
 import org.syzygy.chessms.model.Board;
 import org.syzygy.chessms.model.Move;
 
-public class TestTurnValidator
-	extends BoardValidatorSupport
+public final class TestTurnValidator extends BoardValidatorSupport
 {
-	protected void setUp()
-	{
-		this.board = Board.create();
-		this.validator = new TurnValidator();
-	}
+    protected void setUp()
+    {
+        this.board = Board.create();
+        this.validator = new TurnValidator();
+    }
 
-	public void testValidatesTrue()
-		throws Exception
-	{
-		Move white = Move.valueOf("e2-e4");
-		validator.validate(board, white);
-		validator.confirm(board, white);
-		Move black = Move.valueOf("e7-e5");
-		validator.validate(board, black);
-	}
+    public void testValidatesTrue() throws Exception
+    {
+        Move white = Move.valueOf("e2-e4");
+        validator.validate(board, white);
+        validator.confirm(board, white);
+        Move black = Move.valueOf("e7-e5");
+        validator.validate(board, black);
+    }
 
-	public void testValidatesFalse()
-		throws Exception
-	{
-		Move white = Move.valueOf("e2-e4");
-		validator.validate(board, white);
-		validator.confirm(board, white);
-		white = Move.valueOf("d2-d4");
-		try {
-			validator.validate(board, white);
-			fail("IllegalMoveException not thrown");
-		} catch (IllegalMoveException _) {}
-	}
+    public void testValidatesFalse() throws Exception
+    {
+        Move white = Move.valueOf("e2-e4");
+        validator.validate(board, white);
+        validator.confirm(board, white);
+        white = Move.valueOf("d2-d4");
+        try {
+            validator.validate(board, white);
+            fail("IllegalMoveException not thrown");
+        } catch (IllegalMoveException _) {
+        }
+    }
 
-	private Board board;
-	private TurnValidator validator;
+    private Board board;
+    private TurnValidator validator;
 }

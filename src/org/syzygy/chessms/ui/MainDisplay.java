@@ -16,7 +16,7 @@ public interface MainDisplay
     public Colour getColour();
 
     public String getMove();
-    
+
     public void clearMove();
 
     public void setMove(int n, String move);

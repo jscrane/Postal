@@ -1,30 +1,31 @@
 package org.syzygy.chessms.io;
 
+import javax.microedition.io.Connector;
+import javax.microedition.io.file.FileConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.microedition.io.Connector;
-import javax.microedition.io.file.FileConnection;
-
-public class Filer
+public final class Filer
 {
     private final String directory;
-    
+
     public Filer(String directory)
     {
-        this.directory = "file:///"+directory;
+        this.directory = "file:///" + directory;
     }
-    
+
     public void save(final String name, final Enumeration moves)
     {
-        Thread saver = new Thread() {
-                public void run() {
-                    doSave(name, moves);
-                }
-            };
+        Thread saver = new Thread()
+        {
+            public void run()
+            {
+                doSave(name, moves);
+            }
+        };
         saver.start();
     }
 
@@ -33,10 +34,10 @@ public class Filer
         FileConnection file = null, dir = null;
         OutputStream out = null;
         try {
-            dir = (FileConnection)Connector.open(directory);
+            dir = (FileConnection) Connector.open(directory);
             if (!dir.exists())
                 dir.mkdir();
-            file = (FileConnection)Connector.open(directory+"/"+name);
+            file = (FileConnection) Connector.open(directory + "/" + name);
             if (!file.exists())
                 file.create();
             out = file.openOutputStream();
@@ -47,20 +48,25 @@ public class Filer
             if (out != null)
                 try {
                     out.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
             if (file != null)
                 try {
                     file.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
             if (dir != null)
                 try {
                     dir.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
         }
     }
 
-    private void save(OutputStream out, Enumeration e)
-        throws IOException
+    private void save(OutputStream out, Enumeration e) throws IOException
     {
         StringBuffer buf = new StringBuffer();
         while (e.hasMoreElements())
@@ -71,11 +77,13 @@ public class Filer
 
     public void list(final Completion result)
     {
-        Thread lister = new Thread() {
-                public void run() {
-                    doList(result);
-                }
-            };
+        Thread lister = new Thread()
+        {
+            public void run()
+            {
+                doList(result);
+            }
+        };
         lister.start();
     }
 
@@ -83,7 +91,7 @@ public class Filer
     {
         FileConnection dir = null;
         try {
-            dir = (FileConnection)Connector.open(directory, Connector.READ);
+            dir = (FileConnection) Connector.open(directory, Connector.READ);
             operation.complete(list(dir.list()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,7 +99,9 @@ public class Filer
             if (dir != null)
                 try {
                     dir.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
         }
     }
 
@@ -99,18 +109,20 @@ public class Filer
     {
         Vector v = new Vector();
         while (e.hasMoreElements())
-            v.addElement((String)e.nextElement());
+            v.addElement((String) e.nextElement());
 
         return v;
     }
-    
+
     public void load(final String name, final Completion operation)
     {
-        Thread loader = new Thread() {
-                public void run() {
-                    doLoad(name, operation);
-                }
-            };
+        Thread loader = new Thread()
+        {
+            public void run()
+            {
+                doLoad(name, operation);
+            }
+        };
         loader.start();
     }
 
@@ -119,10 +131,10 @@ public class Filer
         FileConnection file = null;
         InputStream in = null;
         try {
-            file = (FileConnection)Connector.open(directory+"/"+name, Connector.READ);
+            file = (FileConnection) Connector.open(directory + "/" + name, Connector.READ);
             in = file.openInputStream();
-            
-            operation.complete(load(in, (int)file.fileSize()));
+
+            operation.complete(load(in, (int) file.fileSize()));
         } catch (IOException e) {
             e.printStackTrace();
             operation.complete(null);
@@ -130,30 +142,33 @@ public class Filer
             if (in != null)
                 try {
                     in.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
             if (file != null)
                 try {
                     file.close();
-                } catch (IOException _) {}
+                } catch (IOException _) {
+                    // ignored
+                }
         }
     }
 
-    private Vector load(InputStream in, int n)
-        throws IOException
+    private Vector load(InputStream in, int n) throws IOException
     {
         byte[] buf = new byte[n];
-        int off = 0, read = 0;
+        int off = 0, read;
         while (n > 0 && (read = in.read(buf, off, n)) != -1) {
             n -= read;
             off += read;
         }
         String s = new String(buf);
-        int curr = 0, next = 0;
+        int curr = 0, next;
         Vector moves = new Vector();
         while ((next = s.indexOf("\n", curr)) != -1) {
             String m = s.substring(curr, next);
             moves.addElement(m);
-            curr = next+1;
+            curr = next + 1;
         }
         return moves;
     }

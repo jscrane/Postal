@@ -4,32 +4,32 @@ public final class Piece
 {
     static final class Type
     {
-        protected Type(String name, int value)
+        Type(String name, int value)
         {
             this.name = name;
-	    this.value = value;
+            this.value = value;
             next++;
         }
 
-	public int hashCode()
-	{
-	    return next;
-	}
+        public int hashCode()
+        {
+            return next;
+        }
 
         public String toString()
         {
             return name;
         }
 
-	public int getValue()
-	{
-	    return value;
-	}
+        public int getValue()
+        {
+            return value;
+        }
 
         private final String name;
-	private final int value;
+        private final int value;
         private static int next = 0;
-    };
+    }
 
     public static final Type PAWN = new Type("P", 1);
     public static final Type KNIGHT = new Type("N", 2);
@@ -46,7 +46,7 @@ public final class Piece
 
     public Piece(char c)
     {
-        this.colour = c >= 'A' && c <= 'Z'? Colour.WHITE: Colour.BLACK;
+        this.colour = c >= 'A' && c <= 'Z' ? Colour.WHITE : Colour.BLACK;
         switch (c) {
             case 'P':
             case 'p':
@@ -73,10 +73,10 @@ public final class Piece
                 this.type = KING;
                 break;
             default:
-                throw new IllegalArgumentException("invalid piece: "+c);
+                throw new IllegalArgumentException("invalid piece: " + c);
         }
     }
-    
+
     public Colour getColour()
     {
         return colour;
@@ -86,10 +86,15 @@ public final class Piece
     {
         return type;
     }
-    
+
     public String toString()
     {
-        return getColour() == Colour.WHITE? type.toString(): type.toString().toLowerCase();
+        return getColour() == Colour.WHITE ? type.toString() : type.toString().toLowerCase();
+    }
+
+    public boolean isA(Type t)
+    {
+        return getType() == t;
     }
 
     public boolean equals(Object o)
@@ -98,16 +103,16 @@ public final class Piece
             return false;
         Type t;
         if (o instanceof Piece) {
-            Piece p = (Piece)o;
+            Piece p = (Piece) o;
             t = p.getType();
         } else
-            t = (Type)o;
+            t = (Type) o;
         return t == getType();
     }
 
     public int hashCode()
     {
-	return 31 * type.hashCode() + colour.hashCode();
+        return 31 * type.hashCode() + colour.hashCode();
     }
 
     private final Colour colour;

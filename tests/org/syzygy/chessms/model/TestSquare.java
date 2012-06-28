@@ -2,8 +2,7 @@ package org.syzygy.chessms.model;
 
 import junit.framework.TestCase;
 
-public class TestSquare
-    extends TestCase
+public final class TestSquare extends TestCase
 {
     public void testSquare()
     {
@@ -11,7 +10,7 @@ public class TestSquare
         assertEquals(4, p.getFile());
         assertEquals(6, p.getRank());
     }
-    
+
     public void testBadSquare()
     {
         try {

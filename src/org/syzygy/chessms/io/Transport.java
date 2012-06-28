@@ -1,85 +1,77 @@
 package org.syzygy.chessms.io;
 
-import java.io.IOException;
-
 import javax.microedition.io.Connection;
+import java.io.IOException;
 
 public abstract class Transport
 {
-	protected Transport(String remoteAddress)
-	{
-		this.remoteAddress = remoteAddress;
-	}
+    protected Transport(String remoteAddress)
+    {
+        this.remoteAddress = remoteAddress;
+    }
 
-	public String getRemoteAddress()
-	{
-		return remoteAddress;
-	}
+    String getRemoteAddress()
+    {
+        return remoteAddress;
+    }
 
-	public void setRemoteAddress(String remoteAddress)
-	{
-		this.remoteAddress = remoteAddress;
-	}
+    public void setRemoteAddress(String remoteAddress)
+    {
+        this.remoteAddress = remoteAddress;
+    }
 
-	protected abstract String getPrefix();
-	
-	public String toString()
-	{
-		return getPrefix() + getRemoteAddress();
-	}
+    protected abstract String getPrefix();
 
-	public boolean hasPeer()
-	{
-		return remoteAddress != null && !"".equals(remoteAddress);
-	}
-	
-	public void connect(String message)
-		throws IOException
-	{
-		conn = doConnect(message);
-	}
+    public String toString()
+    {
+        return getPrefix() + getRemoteAddress();
+    }
 
-	public void send(String message)
-		throws IOException
-	{
-		send(conn, message);
-	}
+    public boolean hasPeer()
+    {
+        return remoteAddress != null && !"".equals(remoteAddress);
+    }
 
-	public String receive()
-		throws IOException
-	{
-		return receive(conn);
-	}
+    public void connect(String message) throws IOException
+    {
+        conn = doConnect(message);
+    }
 
-	public void listen()
-		throws IOException
-	{
-		conn = doListen();
-	}
+    public void send(String message) throws IOException
+    {
+        send(conn, message);
+    }
 
-	protected abstract Connection doConnect(String message)
-		throws IOException;
+    public String receive() throws IOException
+    {
+        return receive(conn);
+    }
 
-	protected abstract Connection doListen()
-		throws IOException;
+    public void listen() throws IOException
+    {
+        conn = doListen();
+    }
 
-	protected abstract void send(Connection conn, String message)
-		throws IOException;
+    protected abstract Connection doConnect(String message) throws IOException;
 
-	protected abstract String receive(Connection conn)
-		throws IOException;
+    protected abstract Connection doListen() throws IOException;
 
-	public synchronized void close()
-	{
-		if (conn != null)
-			try {
-				conn.close();
-			} catch (IOException _) {
-			} finally {
-				conn = null;
-			}
-	}
+    protected abstract void send(Connection conn, String message) throws IOException;
 
-	private String remoteAddress;
-	private Connection conn = null;
+    protected abstract String receive(Connection conn) throws IOException;
+
+    public synchronized void close()
+    {
+        if (conn != null)
+            try {
+                conn.close();
+            } catch (IOException _) {
+                // ignored
+            } finally {
+                conn = null;
+            }
+    }
+
+    private String remoteAddress;
+    private Connection conn = null;
 }

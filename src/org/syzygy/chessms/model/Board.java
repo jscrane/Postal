@@ -11,24 +11,24 @@ public final class Board
 
     public Board(Board board)
     {
-	for (Enumeration e = board.getPieces(Colour.WHITE); e.hasMoreElements(); ) {
-	    Square s = (Square)e.nextElement();
-	    set(board.get(s), s);
-	}
-	for (Enumeration e = board.getPieces(Colour.BLACK); e.hasMoreElements(); ) {
-	    Square s = (Square)e.nextElement();
-	    set(board.get(s), s);
-	}
+        for (Enumeration e = board.getPieces(Colour.WHITE); e.hasMoreElements(); ) {
+            Square s = (Square) e.nextElement();
+            set(board.get(s), s);
+        }
+        for (Enumeration e = board.getPieces(Colour.BLACK); e.hasMoreElements(); ) {
+            Square s = (Square) e.nextElement();
+            set(board.get(s), s);
+        }
     }
 
     public static Board create()
     {
         Board b = new Board();
-	Colour wh = Colour.WHITE, bl = Colour.BLACK;
+        Colour wh = Colour.WHITE, bl = Colour.BLACK;
 
         for (char file = 'a'; file <= 'h'; file++) {
-            b.set(new Piece(Piece.PAWN, wh), new Square(""+file+"2"));
-            b.set(new Piece(Piece.PAWN, bl), new Square(""+file+"7"));
+            b.set(new Piece(Piece.PAWN, wh), new Square("" + file + "2"));
+            b.set(new Piece(Piece.PAWN, bl), new Square("" + file + "7"));
         }
 
         b.set(new Piece(Piece.ROOK, wh), new Square("a1"));
@@ -57,27 +57,27 @@ public final class Board
 
     public Piece move(Move m)
     {
-	Piece p = remove(m.getFrom());
-	set(p, m.getTo());
-	return p;
+        Piece p = remove(m.getFrom());
+        set(p, m.getTo());
+        return p;
     }
 
     public void set(Piece p, Square s)
     {
-	Piece q = get(s);
+        Piece q = get(s);
         squares[8 * s.getRank() + s.getFile()] = p;
         if (p == null) {
             if (!white.removeElement(s))
                 black.removeElement(s);
         } else {
-	    if (q != null)
-		if (!white.removeElement(s))
-		    black.removeElement(s);
-	    if (p.getColour() == Colour.WHITE)
-		white.addElement(s);
-	    else
-		black.addElement(s);
-	}
+            if (q != null)
+                if (!white.removeElement(s))
+                    black.removeElement(s);
+            if (p.getColour() == Colour.WHITE)
+                white.addElement(s);
+            else
+                black.addElement(s);
+        }
     }
 
     public Piece remove(Square s)
@@ -86,7 +86,7 @@ public final class Board
         set(null, s);
         return p;
     }
-    
+
     public Piece get(Square p)
     {
         return get(p.getRank(), p.getFile());
@@ -99,7 +99,7 @@ public final class Board
 
     public boolean isOccupied(int rank, int file)
     {
-	return get(rank, file) != null;
+        return get(rank, file) != null;
     }
 
     private String getAsString(int rank, int file)
@@ -108,9 +108,9 @@ public final class Board
         if (p != null)
             return p.toString();
         int s = (rank % 2) + (file % 2);
-        return (s == 0 || s == 2)? "_": " ";
+        return (s == 0 || s == 2) ? "_" : " ";
     }
-    
+
     public String toString()
     {
         StringBuffer board = new StringBuffer();
@@ -124,12 +124,12 @@ public final class Board
 
     public Enumeration getPieces(Colour c)
     {
-	return c == Colour.WHITE? white.elements(): black.elements();
+        return c == Colour.WHITE ? white.elements() : black.elements();
     }
 
     public Enumeration getOpposingPieces(Colour c)
     {
-	return c == Colour.WHITE? black.elements(): white.elements();
+        return c == Colour.WHITE ? black.elements() : white.elements();
     }
 
     /**
@@ -137,20 +137,20 @@ public final class Board
      */
     public int getMaterialAdvantage()
     {
-	int a = 0;
-	for (Enumeration e = getPieces(Colour.WHITE); e.hasMoreElements(); ) {
-	    Square s = (Square)e.nextElement();
-	    Piece p = get(s);
-	    a += p.getType().getValue();
-	}
-	for (Enumeration e = getPieces(Colour.BLACK); e.hasMoreElements(); ) {
-	    Square s = (Square)e.nextElement();
-	    Piece p = get(s);
-	    a -= p.getType().getValue();
-	}
-	return a;
+        int a = 0;
+        for (Enumeration e = getPieces(Colour.WHITE); e.hasMoreElements(); ) {
+            Square s = (Square) e.nextElement();
+            Piece p = get(s);
+            a += p.getType().getValue();
+        }
+        for (Enumeration e = getPieces(Colour.BLACK); e.hasMoreElements(); ) {
+            Square s = (Square) e.nextElement();
+            Piece p = get(s);
+            a -= p.getType().getValue();
+        }
+        return a;
     }
 
-    final Piece squares[] = new Piece[64];
-    final Vector white = new Vector(), black = new Vector();
+    private final Piece squares[] = new Piece[64];
+    private final Vector white = new Vector(), black = new Vector();
 }
