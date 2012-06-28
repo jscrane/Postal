@@ -33,16 +33,27 @@ public final class DistributedGameController extends VisualGameController implem
             if (move != null) {
                 String status;
                 String comment = move.getComment();
-                if (comment == null || "".equals(comment))
-                    status = move.isCheck() ? "Check!" : move.isResignation() ? "You win!" : "Your move";
-                else {
+                if (comment == null || "".equals(comment)) {
+                    if (move.isResignation())
+                        status = "You win!";
+                    else if (move.isCheckMate())
+                        status = "Checkmate!";
+                    else if (move.isCheck())
+                        status = "Check!";
+                    else
+                        status = "";
+                } else {
                     status = comment;
-                    if (move.isCheck())
+                    if (move.isResignation())
+                        status += ". You win!";
+                    else if (move.isCheckMate())
+                        status += ". Checkmate!";
+                    else if (move.isCheck())
                         status += ". Check!";
                 }
                 main.setStatus(status);
                 updateState(move);
-                myTurn(!move.isResignation());
+                myTurn(!move.isResignation() && !move.isCheckMate());
             }
         }
     }
@@ -71,7 +82,7 @@ public final class DistributedGameController extends VisualGameController implem
     private void updateState(Move move)
     {
         state.startGame();
-        if (move.isResignation())
+        if (move.isResignation() || move.isCheckMate())
             state.gameOver();
     }
 
@@ -101,7 +112,7 @@ public final class DistributedGameController extends VisualGameController implem
 
     public boolean needsSave()
     {
-        return state.isGameStarted() && !state.isGameEnded();
+        return state.isGameStarted() && !state.isGameOver();
     }
 
     public void save(String name, Persistence rms)

@@ -33,7 +33,7 @@ public final class State
             listener.stateChanged(this, "isMyTurn");
     }
 
-    public boolean isGameEnded()
+    public boolean isGameOver()
     {
         return gameEnded;
     }

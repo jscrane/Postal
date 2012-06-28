@@ -54,6 +54,16 @@ public final class Move
         this.isCheck = isCheck;
     }
 
+    public boolean isCheckMate()
+    {
+        return isCheckMate;
+    }
+
+    public void setIsCheckMate(boolean checkMate)
+    {
+        this.isCheckMate = checkMate;
+    }
+
     public boolean isCapture()
     {
         return isCapture;
@@ -79,7 +89,9 @@ public final class Move
         String s = from.toString();
         s += isCapture() ? "x" : "-";
         s += to.toString();
-        if (isCheck())
+        if (isCheckMate())
+            s += "#";
+        else if (isCheck())
             s += "+";
         return comment == null ? s : s + " " + comment;
     }
@@ -94,7 +106,7 @@ public final class Move
         if (s.length() < 5)
             throw new IllegalArgumentException(s);
         Square from = new Square(s.substring(0, 2)), to;
-        boolean isCapture = s.charAt(2) == 'x', isCheck = false;
+        boolean isCapture = s.charAt(2) == 'x', isCheck = false, isCheckMate = false;
         String comment = null;
         int space = s.indexOf(' ');
         if (space == -1)
@@ -103,10 +115,12 @@ public final class Move
             comment = s.substring(space + 1);
             to = new Square(s.substring(3, 5));
             isCheck = s.charAt(5) == '+';
+            isCheckMate = s.charAt(5) == '#';
         }
         Move move = new Move(from, to, comment);
         move.setIsCapture(isCapture);
         move.setIsCheck(isCheck);
+        move.setIsCheckMate(isCheckMate);
         return move;
     }
 
@@ -115,5 +129,5 @@ public final class Move
 
     private final Square from, to;
     private final String comment;
-    private boolean isCheck, isCapture;
+    private boolean isCheck, isCapture, isCheckMate;
 }

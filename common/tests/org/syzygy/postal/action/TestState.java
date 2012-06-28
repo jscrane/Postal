@@ -33,7 +33,7 @@ public final class TestState extends TestCase
                 one(listener).stateChanged(state, name);
             }});
         state.gameOver();
-        Assert.assertTrue(state.isGameEnded());
+        Assert.assertTrue(state.isGameOver());
         context.assertIsSatisfied();
     }
 }

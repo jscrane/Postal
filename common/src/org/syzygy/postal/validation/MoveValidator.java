@@ -16,8 +16,7 @@ public final class MoveValidator implements BoardValidator
         validators.put(Piece.KNIGHT, new Knight());
     }
 
-    public void validate(Board board, Move move)
-            throws IllegalMoveException
+    public void validate(Board board, Move move) throws IllegalMoveException
     {
         Piece moving = board.get(move.getFrom());
         if (!validate(moving, move))
@@ -47,8 +46,7 @@ public final class MoveValidator implements BoardValidator
         boolean validate(Piece piece, Move move);
     }
 
-    static class Pawn
-            implements Validator
+    static class Pawn implements Validator
     {
         public boolean validate(Piece p, Move m)
         {

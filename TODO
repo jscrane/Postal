@@ -5,7 +5,8 @@ Postal:
 * notification that bogus move has been received
 * when receive first move, indicate who it was from
 
+* exporting game in PGN notation: http://en.wikipedia.org/wiki/Portable_Game_Notation
+
 Board:
 ------
-* checkmate detection
 * remove auto-save and new commands

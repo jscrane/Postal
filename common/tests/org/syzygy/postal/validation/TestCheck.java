@@ -52,6 +52,7 @@ public final class TestCheck extends BoardValidatorSupport
         Move move = move(a8, b8);
         check.confirm(board, move);
         Assert.assertTrue(move.isCheck());
+        Assert.assertFalse(move.isCheckMate());
     }
 
     public void testDisclosedCheck() throws Exception
@@ -66,16 +67,33 @@ public final class TestCheck extends BoardValidatorSupport
         board.move(move);
         check.confirm(board, move);
         Assert.assertTrue(move.isCheck());
+        Assert.assertFalse(move.isCheckMate());
+    }
+
+    public void testCheckMate() throws Exception
+    {
+        Board board = new Board();
+        board.set(new Piece(Piece.KING, white), b1);
+        board.set(new Piece(Piece.KING, black), h8);
+        board.set(new Piece(Piece.PAWN, black), h7);
+        board.set(new Piece(Piece.PAWN, black), g7);
+        board.set(new Piece(Piece.ROOK, white), f1);
+        Move move = move(f1, f8);
+        check.validate(board, move);
+        board.move(move);
+        check.confirm(board, move);
+        Assert.assertTrue(move.isCheck());
+        Assert.assertTrue(move.isCheckMate());
     }
 
     public void testFindKing()
     {
         Board board = Board.create();
-        Assert.assertEquals(e8, check.findKing(board, board.getPieces(Colour.BLACK)));
-        Assert.assertEquals(e1, check.findKing(board, board.getPieces(Colour.WHITE)));
+        Assert.assertEquals(e8, Check.findKing(board, board.getPieces(Colour.BLACK)));
+        Assert.assertEquals(e1, Check.findKing(board, board.getPieces(Colour.WHITE)));
 
         Board empty = new Board();
-        Assert.assertNull(check.findKing(empty, empty.getPieces(Colour.BLACK)));
+        Assert.assertNull(Check.findKing(empty, empty.getPieces(Colour.BLACK)));
     }
 
     private final Check check = new Check(new Validators());

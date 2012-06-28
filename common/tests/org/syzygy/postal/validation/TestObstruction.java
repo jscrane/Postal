@@ -11,8 +11,7 @@ public final class TestObstruction extends BoardValidatorSupport
         this.validator = new Obstruction();
     }
 
-    public void testCannotObstructKnight()
-            throws Exception
+    public void testCannotObstructKnight() throws Exception
     {
         board.set(new Piece(Piece.KNIGHT, white), b1);
         validator.validate(board, move(b1, c2));
@@ -62,8 +61,7 @@ public final class TestObstruction extends BoardValidatorSupport
         }
     }
 
-    public void testUnobstructedMove()
-            throws Exception
+    public void testUnobstructedMove() throws Exception
     {
         board.set(new Piece(Piece.ROOK, black), a8);
         validator.validate(board, move(a8, a1));

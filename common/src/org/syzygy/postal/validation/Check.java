@@ -22,7 +22,7 @@ public final class Check implements BoardValidator, BoardObserver
             throw new IllegalMoveException("In Check");
     }
 
-    Square findKing(Board board, Enumeration pieces)
+    static Square findKing(Board board, Enumeration pieces)
     {
         while (pieces.hasMoreElements()) {
             Square s = (Square) pieces.nextElement();
@@ -44,6 +44,16 @@ public final class Check implements BoardValidator, BoardObserver
         Colour my = moving.getColour();
         Enumeration opp = board.getOpposingPieces(my);
         Square oppKing = findKing(board, opp);
-        move.setIsCheck(utils.isAttacked(board, oppKing, board.getPieces(my)));
+        boolean check = utils.isAttacked(board, oppKing, board.getPieces(my));
+        move.setIsCheck(check);
+        if (check) {
+            int f = oppKing.getFile(), r = oppKing.getRank();
+            for (int i = f - 1; i <= f + 1; i++)
+                for (int j = r - 1; j <= r + 1; j++)
+                    if (i >= 0 && i <= 7 && j >= 0 && j <= 7)
+                        if (!board.isOccupied(j, i) && !utils.isAttacked(board, new Square(j, i), board.getPieces(my)))
+                            return;
+            move.setIsCheckMate(true);
+        }
     }
 }
