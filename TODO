@@ -1,0 +1,11 @@
+Postal:
+-------
+* offering a draw
+* manage state better: one state object initialised from rms
+* notification that bogus move has been received
+* when receive first move, indicate who it was from
+
+Board:
+------
+* checkmate detection
+* remove auto-save and new commands
