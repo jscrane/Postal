@@ -4,7 +4,7 @@ public final class Piece
 {
     static final class Type
     {
-        Type(String name, int value)
+        private Type(String name, int value)
         {
             this.name = name;
             this.value = value;
@@ -21,11 +21,6 @@ public final class Piece
             return name;
         }
 
-        public int getValue()
-        {
-            return value;
-        }
-
         private final String name;
         private final int value;
         private static int next = 0;
@@ -38,7 +33,37 @@ public final class Piece
     public static final Type QUEEN = new Type("Q", 8);
     public static final Type KING = new Type("K", 0);
 
-    public Piece(Type type, Colour colour)
+    public static Piece pawn(Colour colour)
+    {
+        return new Piece(PAWN, colour);
+    }
+
+    public static Piece knight(Colour colour)
+    {
+        return new Piece(KNIGHT, colour);
+    }
+
+    public static Piece bishop(Colour colour)
+    {
+        return new Piece(BISHOP, colour);
+    }
+
+    public static Piece rook(Colour colour)
+    {
+        return new Piece(ROOK, colour);
+    }
+
+    public static Piece queen(Colour colour)
+    {
+        return new Piece(QUEEN, colour);
+    }
+
+    public static Piece king(Colour colour)
+    {
+        return new Piece(KING, colour);
+    }
+
+    private Piece(Type type, Colour colour)
     {
         this.type = type;
         this.colour = colour;
@@ -82,9 +107,24 @@ public final class Piece
         return colour;
     }
 
+    public boolean is(Colour c)
+    {
+        return colour == c;
+    }
+
     public Type getType()
     {
         return type;
+    }
+
+    public boolean isA(Type t)
+    {
+        return type == t;
+    }
+
+    public int getValue()
+    {
+        return type.value;
     }
 
     public String toString()
@@ -92,22 +132,12 @@ public final class Piece
         return getColour() == Colour.WHITE ? type.toString() : type.toString().toLowerCase();
     }
 
-    public boolean isA(Type t)
-    {
-        return getType() == t;
-    }
-
     public boolean equals(Object o)
     {
-        if (!(o instanceof Piece) && !(o instanceof Type))
+        if (!(o instanceof Piece))
             return false;
-        Type t;
-        if (o instanceof Piece) {
-            Piece p = (Piece) o;
-            t = p.getType();
-        } else
-            t = (Type) o;
-        return t == getType();
+        Piece p = (Piece) o;
+        return isA(p.type) && is(p.colour);
     }
 
     public int hashCode()

@@ -8,8 +8,8 @@ public final class TestEnPassant extends BoardValidatorSupport
 {
     public void testEnPassant() throws Exception
     {
-        board.set(new Piece(Piece.PAWN, white), e5);
-        board.set(new Piece(Piece.PAWN, black), f7);
+        board.set(Piece.pawn(white), e5);
+        board.set(Piece.pawn(black), f7);
 
         Move m = move(f7, f5);
         validator.validate(board, m);
@@ -25,9 +25,9 @@ public final class TestEnPassant extends BoardValidatorSupport
 
     public void testNotEnPassant() throws Exception
     {
-        board.set(new Piece(Piece.PAWN, white), d4);
-        board.set(new Piece(Piece.PAWN, white), e4);
-        board.set(new Piece(Piece.PAWN, black), e5);
+        board.set(Piece.pawn(white), d4);
+        board.set(Piece.pawn(white), e4);
+        board.set(Piece.pawn(black), e5);
 
         Move m = move(d4, e5);
         validator.validate(board, m);
@@ -39,8 +39,8 @@ public final class TestEnPassant extends BoardValidatorSupport
 
     public void testSameColour() throws Exception
     {
-        board.set(new Piece(Piece.PAWN, white), e5);
-        board.set(new Piece(Piece.PAWN, white), f7);
+        board.set(Piece.pawn(white), e5);
+        board.set(Piece.pawn(white), f7);
 
         Move m = move(f7, f5);
         validator.validate(board, m);
@@ -57,10 +57,10 @@ public final class TestEnPassant extends BoardValidatorSupport
 
     public void testTooLate() throws Exception
     {
-        board.set(new Piece(Piece.PAWN, white), d2);
-        board.set(new Piece(Piece.PAWN, white), e5);
-        board.set(new Piece(Piece.PAWN, black), f7);
-        board.set(new Piece(Piece.PAWN, black), g7);
+        board.set(Piece.pawn(white), d2);
+        board.set(Piece.pawn(white), e5);
+        board.set(Piece.pawn(black), f7);
+        board.set(Piece.pawn(black), g7);
 
         Move m = move(f7, f5);
         validator.validate(board, m);

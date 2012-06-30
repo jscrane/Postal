@@ -9,22 +9,22 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 {
     public void testKingsSide() throws Exception
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
         Move m = move(e1, g1);
         validator.validate(board, m);
         board.move(m);
         validator.confirm(board, m);
         Piece king = board.get(g1), rook = board.get(f1);
         assertNotNull(king);
-        assertEquals(Piece.KING, king.getType());
+        assertTrue(king.isA(Piece.KING));
         assertNotNull(rook);
-        assertEquals(Piece.ROOK, rook.getType());
+        assertTrue(rook.isA(Piece.ROOK));
     }
 
     public void testKingsSideRookAbsent()
     {
-        board.set(new Piece(Piece.KING, white), e1);
+        board.set(Piece.king(white), e1);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -34,22 +34,22 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testQueensSide() throws Exception
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), a1);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), a1);
         Move m = move(e1, c1);
         validator.validate(board, m);
         board.move(m);
         validator.confirm(board, m);
         Piece king = board.get(c1), rook = board.get(d1);
         assertNotNull(king);
-        assertEquals(Piece.KING, king.getType());
+        assertTrue(king.isA(Piece.KING));
         assertNotNull(rook);
-        assertEquals(Piece.ROOK, rook.getType());
+        assertTrue(rook.isA(Piece.ROOK));
     }
 
     public void testQueensSideRookAbsent()
     {
-        board.set(new Piece(Piece.KING, white), e1);
+        board.set(Piece.king(white), e1);
         try {
             validator.validate(board, move(e1, c1));
             fail("IllegalMoveException not thrown");
@@ -59,8 +59,8 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testKingsSideBlackRook()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, black), h1);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(black), h1);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -70,8 +70,8 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleIfKingMoved() throws Exception
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
         Move m = move(e1, e2);
         validator.validate(board, m);
         board.move(m);
@@ -89,10 +89,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleOutOfCheck()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
-        board.set(new Piece(Piece.KING, black), d8);
-        board.set(new Piece(Piece.ROOK, black), e8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
+        board.set(Piece.king(black), d8);
+        board.set(Piece.rook(black), e8);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -102,10 +102,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleOutOfDanger()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
-        board.set(new Piece(Piece.KING, black), d8);
-        board.set(new Piece(Piece.ROOK, black), h8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
+        board.set(Piece.king(black), d8);
+        board.set(Piece.rook(black), h8);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -115,10 +115,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleIntoCheckOnKingsSide()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
-        board.set(new Piece(Piece.KING, black), d8);
-        board.set(new Piece(Piece.ROOK, black), g8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
+        board.set(Piece.king(black), d8);
+        board.set(Piece.rook(black), g8);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -128,10 +128,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleIntoDangerOnKingsSide()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), h1);
-        board.set(new Piece(Piece.KING, black), d8);
-        board.set(new Piece(Piece.ROOK, black), f8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), h1);
+        board.set(Piece.king(black), d8);
+        board.set(Piece.rook(black), f8);
         try {
             validator.validate(board, move(e1, g1));
             fail("IllegalMoveException not thrown");
@@ -141,10 +141,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleIntoCheckOnQueensSide()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), a1);
-        board.set(new Piece(Piece.KING, black), d8);
-        board.set(new Piece(Piece.ROOK, black), c8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), a1);
+        board.set(Piece.king(black), d8);
+        board.set(Piece.rook(black), c8);
         try {
             validator.validate(board, move(e1, c1));
             fail("IllegalMoveException not thrown");
@@ -154,10 +154,10 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCantCastleIntoDangerOnQueensSide()
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), a1);
-        board.set(new Piece(Piece.KING, black), c8);
-        board.set(new Piece(Piece.ROOK, black), d8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), a1);
+        board.set(Piece.king(black), c8);
+        board.set(Piece.rook(black), d8);
         try {
             validator.validate(board, move(e1, c1));
             fail("IllegalMoveException not thrown");
@@ -167,9 +167,9 @@ public final class TestWhiteCastling extends BoardValidatorSupport
 
     public void testCastlingGivesCheck() throws Exception
     {
-        board.set(new Piece(Piece.KING, white), e1);
-        board.set(new Piece(Piece.ROOK, white), a1);
-        board.set(new Piece(Piece.KING, black), d8);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.rook(white), a1);
+        board.set(Piece.king(black), d8);
         Move m = move(e1, c1);
 
         Validators all = new Validators();

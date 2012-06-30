@@ -8,7 +8,7 @@ final class TurnValidator implements BoardValidator, BoardObserver
 {
     public void validate(Board board, Move move) throws IllegalMoveException
     {
-        if (board.get(move.getFrom()).getColour() != expected)
+        if (!board.get(move.getFrom()).is(expected))
             throw new IllegalMoveException("Not your turn");
     }
 

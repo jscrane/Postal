@@ -27,14 +27,14 @@ final class Castling implements BoardValidator, BoardObserver
     {
         Square from = move.getFrom(), to = move.getTo();
         Piece k = board.get(from), kr = board.get(h), qr = board.get(a);
-        if (!e.equals(from) || !k.isA(Piece.KING) || k.getColour() != colour)
+        if (!e.equals(from) || !k.isA(Piece.KING) || !k.is(colour))
             return;
 
         int dx = move.getDx(), dy = move.getDy();
         if (dy != 0 || (dx != 2 && dx != -2))
             return;
 
-        if (dx == 2 && kr != null && colour == kr.getColour() && kr.isA(Piece.ROOK))
+        if (dx == 2 && kr != null && kr.is(colour) && kr.isA(Piece.ROOK))
             if (!kMoved && !krMoved && notAttacked(board, from) && notAttacked(board, h)) {
                 Board copy = new Board(board);
                 copy.move(move);
@@ -42,7 +42,7 @@ final class Castling implements BoardValidator, BoardObserver
                     return;
             }
 
-        if (dx == -2 && qr != null && colour == qr.getColour() && qr.isA(Piece.ROOK))
+        if (dx == -2 && qr != null && qr.is(colour) && qr.isA(Piece.ROOK))
             if (!kMoved && !qrMoved && notAttacked(board, from) && notAttacked(board, a)) {
                 Board copy = new Board(board);
                 copy.move(move);
@@ -61,7 +61,7 @@ final class Castling implements BoardValidator, BoardObserver
     public void confirm(Board board, Move move)
     {
         Piece p = board.get(move.getTo());
-        if (p.getColour() == colour) {
+        if (p.is(colour)) {
             if (p.isA(Piece.KING)) {
                 kMoved = true;
                 int dx = move.getDx();

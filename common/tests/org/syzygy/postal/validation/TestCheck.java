@@ -11,8 +11,8 @@ public final class TestCheck extends BoardValidatorSupport
     public void testCantMoveIntoCheck()
     {
         Board board = new Board();
-        board.set(new Piece(Piece.ROOK, black), a8);
-        board.set(new Piece(Piece.KING, white), b1);
+        board.set(Piece.rook(black), a8);
+        board.set(Piece.king(white), b1);
         try {
             check.validate(board, move(b1, a1));
             Assert.fail("IllegalMoveException not thrown");
@@ -23,10 +23,10 @@ public final class TestCheck extends BoardValidatorSupport
     public void testCantMoveAndStayInCheck()
     {
         Board board = new Board();
-        board.set(new Piece(Piece.ROOK, black), a8);
-        board.set(new Piece(Piece.PAWN, white), e2);
-        board.set(new Piece(Piece.KING, white), a2);
-        board.set(new Piece(Piece.KING, black), h8);
+        board.set(Piece.rook(black), a8);
+        board.set(Piece.pawn(white), e2);
+        board.set(Piece.king(white), a2);
+        board.set(Piece.king(black), h8);
         try {
             check.validate(board, move(e2, e4));
             Assert.fail("IllegalMoveException not thrown");
@@ -37,18 +37,18 @@ public final class TestCheck extends BoardValidatorSupport
     public void testMoveBlocksCheck() throws Exception
     {
         Board board = new Board();
-        board.set(new Piece(Piece.ROOK, black), a4);
-        board.set(new Piece(Piece.PAWN, white), e2);
-        board.set(new Piece(Piece.KING, white), h4);
-        board.set(new Piece(Piece.KING, black), h8);
+        board.set(Piece.rook(black), a4);
+        board.set(Piece.pawn(white), e2);
+        board.set(Piece.king(white), h4);
+        board.set(Piece.king(black), h8);
         check.validate(board, move(e2, e4));
     }
 
     public void testGivesCheck()
     {
         Board board = new Board();
-        board.set(new Piece(Piece.ROOK, black), b8);
-        board.set(new Piece(Piece.KING, white), b1);
+        board.set(Piece.rook(black), b8);
+        board.set(Piece.king(white), b1);
         Move move = move(a8, b8);
         check.confirm(board, move);
         Assert.assertTrue(move.isCheck());
@@ -58,10 +58,10 @@ public final class TestCheck extends BoardValidatorSupport
     public void testDisclosedCheck() throws Exception
     {
         Board board = new Board();
-        board.set(new Piece(Piece.KING, black), h8);
-        board.set(new Piece(Piece.ROOK, black), b8);
-        board.set(new Piece(Piece.BISHOP, black), b4);
-        board.set(new Piece(Piece.KING, white), b1);
+        board.set(Piece.king(black), h8);
+        board.set(Piece.rook(black), b8);
+        board.set(Piece.bishop(black), b4);
+        board.set(Piece.king(white), b1);
         Move move = move(b4, d6);
         check.validate(board, move);
         board.move(move);
@@ -73,11 +73,11 @@ public final class TestCheck extends BoardValidatorSupport
     public void testCheckMate() throws Exception
     {
         Board board = new Board();
-        board.set(new Piece(Piece.KING, white), b1);
-        board.set(new Piece(Piece.KING, black), h8);
-        board.set(new Piece(Piece.PAWN, black), h7);
-        board.set(new Piece(Piece.PAWN, black), g7);
-        board.set(new Piece(Piece.ROOK, white), f1);
+        board.set(Piece.king(white), b1);
+        board.set(Piece.king(black), h8);
+        board.set(Piece.pawn(black), h7);
+        board.set(Piece.pawn(black), g7);
+        board.set(Piece.rook(white), f1);
         Move move = move(f1, f8);
         check.validate(board, move);
         board.move(move);

@@ -13,14 +13,14 @@ public final class TestObstruction extends BoardValidatorSupport
 
     public void testCannotObstructKnight() throws Exception
     {
-        board.set(new Piece(Piece.KNIGHT, white), b1);
+        board.set(Piece.knight(white), b1);
         validator.validate(board, move(b1, c2));
     }
 
     public void testObstructedPositiveDiagonalMove()
     {
-        board.set(new Piece(Piece.BISHOP, white), c1);
-        board.set(new Piece(Piece.KNIGHT, white), f4);
+        board.set(Piece.bishop(white), c1);
+        board.set(Piece.knight(white), f4);
         try {
             validator.validate(board, move(c1, h6));
             fail("IllegalMoveException not thrown");
@@ -30,8 +30,8 @@ public final class TestObstruction extends BoardValidatorSupport
 
     public void testObstructedNegativeDiagonalMove()
     {
-        board.set(new Piece(Piece.BISHOP, black), c8);
-        board.set(new Piece(Piece.KNIGHT, black), f5);
+        board.set(Piece.bishop(black), c8);
+        board.set(Piece.knight(black), f5);
         try {
             validator.validate(board, move(c8, h3));
             fail("IllegalMoveException not thrown");
@@ -41,8 +41,8 @@ public final class TestObstruction extends BoardValidatorSupport
 
     public void testObstructedPositiveVerticalMove()
     {
-        board.set(new Piece(Piece.ROOK, white), a1);
-        board.set(new Piece(Piece.PAWN, black), a6);
+        board.set(Piece.rook(white), a1);
+        board.set(Piece.pawn(black), a6);
         try {
             validator.validate(board, move(a1, a8));
             fail("IllegalMoveException not thrown");
@@ -52,8 +52,8 @@ public final class TestObstruction extends BoardValidatorSupport
 
     public void testObstructedNegativeVerticalMove()
     {
-        board.set(new Piece(Piece.ROOK, black), a8);
-        board.set(new Piece(Piece.PAWN, white), a6);
+        board.set(Piece.rook(black), a8);
+        board.set(Piece.pawn(white), a6);
         try {
             validator.validate(board, move(a8, a1));
             fail("IllegalMoveException not thrown");
@@ -63,7 +63,7 @@ public final class TestObstruction extends BoardValidatorSupport
 
     public void testUnobstructedMove() throws Exception
     {
-        board.set(new Piece(Piece.ROOK, black), a8);
+        board.set(Piece.rook(black), a8);
         validator.validate(board, move(a8, a1));
     }
 

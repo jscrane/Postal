@@ -22,7 +22,7 @@ public final class TestBoard extends TestCase
     public void testPlaceWhitePawnE4ToString()
     {
         Board board = new Board();
-        board.set(new Piece(Piece.PAWN, Colour.WHITE), new Square("e4"));
+        board.set(Piece.pawn(Colour.WHITE), new Square("e4"));
         System.out.println(board.toString());
         Assert.assertEquals(" _ _ _ _" + "\n" +
                 "_ _ _ _ " + "\n" +
@@ -54,8 +54,8 @@ public final class TestBoard extends TestCase
     {
         Board board = new Board();
         Square a1 = new Square("a1"), b1 = new Square("b1"), b8 = new Square("b8");
-        board.set(new Piece(Piece.ROOK, Colour.BLACK), b8);
-        board.set(new Piece(Piece.KING, Colour.WHITE), b1);
+        board.set(Piece.rook(Colour.BLACK), b8);
+        board.set(Piece.king(Colour.WHITE), b1);
         Board copy = new Board(board);
         Assert.assertEquals(board.get(b1), copy.get(b1));
         Assert.assertEquals(board.get(b8), copy.get(b8));

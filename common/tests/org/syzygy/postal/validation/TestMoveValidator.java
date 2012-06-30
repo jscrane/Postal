@@ -6,13 +6,13 @@ public final class TestMoveValidator extends BoardValidatorSupport
 {
     public void testNoMove()
     {
-        Piece pawn = new Piece(Piece.PAWN, white);
+        Piece pawn = Piece.pawn(white);
         assertFalse(v.validate(pawn, move(e2, e2)));
     }
 
     public void testValidateWhitePawnMove()
     {
-        Piece pawn = new Piece(Piece.PAWN, white);
+        Piece pawn = Piece.pawn(white);
         assertTrue(v.validate(pawn, move(e2, e4)));
         assertTrue(v.validate(pawn, move(e5, f6)));
         assertFalse(v.validate(pawn, move(e2, f4)));
@@ -24,14 +24,14 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateWhiteEnPassant()
     {
-        Piece pawn = new Piece(Piece.PAWN, white);
+        Piece pawn = Piece.pawn(white);
         assertTrue(v.validate(pawn, move(e6, f7)));
         assertTrue(v.validate(pawn, move(e6, d7)));
     }
 
     public void testValidateBlackPawnMove()
     {
-        Piece pawn = new Piece(Piece.PAWN, black);
+        Piece pawn = Piece.pawn(black);
         assertTrue(v.validate(pawn, move(e7, e5)));
         assertTrue(v.validate(pawn, move(e4, f3)));
         assertFalse(v.validate(pawn, move(e7, f5)));
@@ -42,14 +42,14 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateBlackEnPassant()
     {
-        Piece pawn = new Piece(Piece.PAWN, black);
+        Piece pawn = Piece.pawn(black);
         assertTrue(v.validate(pawn, move(e4, d3)));
         assertTrue(v.validate(pawn, move(e4, f3)));
     }
 
     public void testValidateRookMove()
     {
-        Piece rook = new Piece(Piece.ROOK, white);
+        Piece rook = Piece.rook(white);
         assertTrue(v.validate(rook, move(a1, a8)));
         assertTrue(v.validate(rook, move(a1, h1)));
         assertFalse(v.validate(rook, move(a1, b2)));
@@ -57,7 +57,7 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateKingMove()
     {
-        Piece king = new Piece(Piece.KING, black);
+        Piece king = Piece.king(black);
         assertTrue(v.validate(king, move(e4, e5)));
         assertTrue(v.validate(king, move(e5, e4)));
         assertTrue(v.validate(king, move(e4, d5)));
@@ -68,7 +68,7 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateKingCastle()
     {
-        Piece king = new Piece(Piece.KING, black);
+        Piece king = Piece.king(black);
         assertTrue(v.validate(king, move(e8, g8)));
         assertFalse(v.validate(king, move(d8, f8)));
         assertTrue(v.validate(king, move(e8, c8)));
@@ -77,7 +77,7 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateBishopMove()
     {
-        Piece bishop = new Piece(Piece.BISHOP, white);
+        Piece bishop = Piece.bishop(white);
         assertTrue(v.validate(bishop, move(a1, h8)));
         assertTrue(v.validate(bishop, move(h1, a8)));
         assertTrue(v.validate(bishop, move(a8, h1)));
@@ -88,7 +88,7 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateQueenMove()
     {
-        Piece queen = new Piece(Piece.QUEEN, black);
+        Piece queen = Piece.queen(black);
         assertTrue(v.validate(queen, move(a1, h8)));
         assertTrue(v.validate(queen, move(h1, a8)));
         assertTrue(v.validate(queen, move(a8, h1)));
@@ -101,7 +101,7 @@ public final class TestMoveValidator extends BoardValidatorSupport
 
     public void testValidateKnightMove()
     {
-        Piece kn = new Piece(Piece.KNIGHT, white);
+        Piece kn = Piece.knight(white);
         assertTrue(v.validate(kn, move(b1, c3)));
         assertTrue(v.validate(kn, move(g1, f3)));
         assertTrue(v.validate(kn, move(b8, a6)));

@@ -19,9 +19,9 @@ final class PawnCapture implements BoardValidator
 
         int dx = move.getDx(), dy = move.getDy();
         if (dx < 0) dx = -dx;
-        if (moving.getColour() == Colour.BLACK)
+        if (moving.is(Colour.BLACK))
             dy = -dy;
-        if (dx == 1 && dy == 1 && moving.getColour() != opposing.getColour())
+        if (dx == 1 && dy == 1 && !moving.is(opposing.getColour()))
             return;
 
         throw new IllegalMoveException("Invalid Pawn Capture");

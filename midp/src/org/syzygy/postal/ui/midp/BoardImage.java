@@ -72,7 +72,7 @@ final class BoardImage
         try {
             if (i == null) {
                 String t = p.toString();
-                if (p.getColour() == Colour.WHITE)
+                if (p.is(Colour.WHITE))
                     t = "w" + t.toLowerCase();
                 else
                     t = "b" + t;

@@ -17,9 +17,9 @@ final class Queen implements BoardObserver
         Square to = move.getTo();
         if (to.getRank() == 7) {
             Piece moved = board.get(to);
-            if (moved.getType() == Piece.PAWN) {
+            if (moved.isA(Piece.PAWN)) {
                 board.remove(to);
-                board.set(new Piece(Piece.QUEEN, moved.getColour()), to);
+                board.set(Piece.queen(moved.getColour()), to);
                 all.confirm(board, move);
             }
         }

@@ -27,30 +27,30 @@ public final class Board
         Colour wh = Colour.WHITE, bl = Colour.BLACK;
 
         for (char file = 'a'; file <= 'h'; file++) {
-            b.set(new Piece(Piece.PAWN, wh), new Square("" + file + "2"));
-            b.set(new Piece(Piece.PAWN, bl), new Square("" + file + "7"));
+            b.set(Piece.pawn(wh), new Square("" + file + "2"));
+            b.set(Piece.pawn(bl), new Square("" + file + "7"));
         }
 
-        b.set(new Piece(Piece.ROOK, wh), new Square("a1"));
-        b.set(new Piece(Piece.ROOK, bl), new Square("a8"));
-        b.set(new Piece(Piece.ROOK, wh), new Square("h1"));
-        b.set(new Piece(Piece.ROOK, bl), new Square("h8"));
+        b.set(Piece.rook(wh), new Square("a1"));
+        b.set(Piece.rook(bl), new Square("a8"));
+        b.set(Piece.rook(wh), new Square("h1"));
+        b.set(Piece.rook(bl), new Square("h8"));
 
-        b.set(new Piece(Piece.KNIGHT, wh), new Square("b1"));
-        b.set(new Piece(Piece.KNIGHT, bl), new Square("b8"));
-        b.set(new Piece(Piece.KNIGHT, wh), new Square("g1"));
-        b.set(new Piece(Piece.KNIGHT, bl), new Square("g8"));
+        b.set(Piece.knight(wh), new Square("b1"));
+        b.set(Piece.knight(bl), new Square("b8"));
+        b.set(Piece.knight(wh), new Square("g1"));
+        b.set(Piece.knight(bl), new Square("g8"));
 
-        b.set(new Piece(Piece.BISHOP, wh), new Square("c1"));
-        b.set(new Piece(Piece.BISHOP, bl), new Square("c8"));
-        b.set(new Piece(Piece.BISHOP, wh), new Square("f1"));
-        b.set(new Piece(Piece.BISHOP, bl), new Square("f8"));
+        b.set(Piece.bishop(wh), new Square("c1"));
+        b.set(Piece.bishop(bl), new Square("c8"));
+        b.set(Piece.bishop(wh), new Square("f1"));
+        b.set(Piece.bishop(bl), new Square("f8"));
 
-        b.set(new Piece(Piece.QUEEN, wh), new Square("d1"));
-        b.set(new Piece(Piece.QUEEN, bl), new Square("d8"));
+        b.set(Piece.queen(wh), new Square("d1"));
+        b.set(Piece.queen(bl), new Square("d8"));
 
-        b.set(new Piece(Piece.KING, wh), new Square("e1"));
-        b.set(new Piece(Piece.KING, bl), new Square("e8"));
+        b.set(Piece.king(wh), new Square("e1"));
+        b.set(Piece.king(bl), new Square("e8"));
 
         return b;
     }
@@ -141,12 +141,12 @@ public final class Board
         for (Enumeration e = getPieces(Colour.WHITE); e.hasMoreElements(); ) {
             Square s = (Square) e.nextElement();
             Piece p = get(s);
-            a += p.getType().getValue();
+            a += p.getValue();
         }
         for (Enumeration e = getPieces(Colour.BLACK); e.hasMoreElements(); ) {
             Square s = (Square) e.nextElement();
             Piece p = get(s);
-            a -= p.getType().getValue();
+            a -= p.getValue();
         }
         return a;
     }

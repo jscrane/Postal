@@ -8,11 +8,11 @@ final class EnPassant implements BoardValidator, BoardObserver
     {
         Square from = move.getFrom(), to = move.getTo();
         Piece p = board.get(from), q = board.get(to);
-        if (p.getType() == Piece.PAWN && q == null) {
+        if (p.isA(Piece.PAWN) && q == null) {
             int dx = move.getDx(), dy = move.getDy(), d = dx * dy;
             if (d == 1 || d == -1) {
                 Piece r = board.get(from.getRank(), to.getFile());
-                if (!passe || r == null || p.getColour() == r.getColour())
+                if (!passe || r == null || p.is(r.getColour()))
                     throw new IllegalMoveException("Invalid en passant");
             }
         }
@@ -23,12 +23,11 @@ final class EnPassant implements BoardValidator, BoardObserver
         Square from = move.getFrom(), to = move.getTo();
         Piece p = board.get(to);
         passe = false;
-        if (p.getType() == Piece.PAWN) {
+        if (p.isA(Piece.PAWN)) {
             int f = to.getFile(), dx = move.getDx(), dy = move.getDy(), d = dx * dy;
             if (d == 1 || d == -1) {
                 int r = from.getRank();
-                if ((p.getColour() == Colour.WHITE && r == 4) ||
-                        (p.getColour() == Colour.BLACK && r == 3))
+                if ((p.is(Colour.WHITE) && r == 4) || (p.is(Colour.BLACK) && r == 3))
                     board.remove(new Square(r, f));
             } else if (dx == 0 && (dy == 2 || dy == -2)) {
                 if (f > 1)
@@ -41,7 +40,7 @@ final class EnPassant implements BoardValidator, BoardObserver
 
     private boolean passing(Piece p, Piece r)
     {
-        return r != null && r.getType() == Piece.PAWN && r.getColour() != p.getColour();
+        return r != null && r.isA(Piece.PAWN) && !r.is(p.getColour());
     }
 
     private boolean passe = false;

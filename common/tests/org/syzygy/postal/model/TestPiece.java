@@ -9,7 +9,7 @@ public final class TestPiece extends TestCase
     {
         Piece p = new Piece('k');
         Assert.assertEquals(Colour.BLACK, p.getColour());
-        Assert.assertEquals(Piece.KING, p.getType());
+        Assert.assertTrue(p.isA(Piece.KING));
     }
 
     public void testBadPiece()

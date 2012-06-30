@@ -51,14 +51,14 @@ public final class MoveValidator implements BoardValidator
         public boolean validate(Piece p, Move m)
         {
             int dx = m.getDx(), dy = m.getDy();
-            if (p.getColour() == Colour.BLACK)
+            if (p.is(Colour.BLACK))
                 dy = -dy;
             if (dx == 0) {
                 if (dy == 1)
                     return true;
                 int f = m.getFrom().getRank();
                 if (dy == 2)
-                    return p.getColour() == Colour.WHITE ? f == 1 : f == 6;
+                    return p.is(Colour.WHITE) ? f == 1 : f == 6;
             } else {
                 if (dx < 0)
                     dx = -dx;
@@ -87,7 +87,7 @@ public final class MoveValidator implements BoardValidator
             if (dx < 2 && dy < 2)
                 return true;
             if (dx == 2 && dy == 0)
-                return p.getColour() == Colour.WHITE && m.getFrom().toString().equals("e1") || p.getColour() == Colour.BLACK && m.getFrom().toString().equals("e8");
+                return p.is(Colour.WHITE) && m.getFrom().toString().equals("e1") || p.is(Colour.BLACK) && m.getFrom().toString().equals("e8");
             return false;
         }
     }
