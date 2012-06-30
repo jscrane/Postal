@@ -73,7 +73,7 @@ public final class Board
             if (q != null)
                 if (!white.removeElement(s))
                     black.removeElement(s);
-            if (p.getColour() == Colour.WHITE)
+            if (p.is(Colour.WHITE))
                 white.addElement(s);
             else
                 black.addElement(s);

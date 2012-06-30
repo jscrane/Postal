@@ -1,6 +1,6 @@
-Postal Chess for MIDP.
+Postal Chess for SMS for MIDP.
 
-Copyright (c) 2012, Stephen Crane, jscrane@gmail.com
+Copyright (c) 2008-2012, Stephen Crane, jscrane@gmail.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

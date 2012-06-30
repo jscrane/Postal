@@ -4,7 +4,7 @@ import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.io.Completion;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.Filer;
-import org.syzygy.postal.io.midp.RmsGame;
+import org.syzygy.postal.io.midp.RmsPersistence;
 import org.syzygy.postal.ui.midp.DefaultCommand;
 import org.syzygy.postal.ui.midp.MainCanvas;
 
@@ -128,7 +128,7 @@ public final class BoardMIDlet extends PauseableMIDlet
     private final TextField fileName = new TextField(null, null, 64, TextField.ANY);
     private final Form file = new Form("Save", new Item[]{ fileName });
     private final List directory = new List("Load", List.IMPLICIT);
-    private final Persistence rms = new RmsGame();
+    private final Persistence rms = new RmsPersistence();
     private final Command ok = new Command("OK", Command.SCREEN, 1);
     private final Command cancel = new Command("Cancel", Command.SCREEN, 1);
     private final Command quit = new Command("Quit", Command.SCREEN, 3);

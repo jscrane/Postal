@@ -21,6 +21,15 @@ public final class TestMove extends TestCase
         Assert.assertEquals("a7xb8+ gotcha", m.toString());
     }
 
+    public void testToStringCaptureCheckmate()
+    {
+        Move m = new Move(new Square("a7"), new Square("b8"));
+        m.setIsCapture(true);
+        m.setIsCheck(true);
+        m.setIsCheckMate(true);
+        Assert.assertEquals("a7xb8#", m.toString());
+    }
+
     public void testParse()
     {
         Move m = Move.valueOf("e2-e4 yawn");

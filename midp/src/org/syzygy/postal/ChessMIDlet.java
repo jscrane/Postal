@@ -7,7 +7,7 @@ import org.syzygy.postal.io.AbstractTransport;
 import org.syzygy.postal.io.EventListener;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.Filer;
-import org.syzygy.postal.io.midp.RmsGame;
+import org.syzygy.postal.io.midp.RmsPersistence;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.ui.midp.DefaultCommand;
 import org.syzygy.postal.ui.midp.MainCanvas;
@@ -209,7 +209,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
     private final Display display;
     private final String name;
     private final Filer filer;
-    private final Persistence rms = new RmsGame();
+    private final Persistence rms = new RmsPersistence();
     private final TextField fileName = new TextField(null, null, 64, TextField.ANY);
     private final Screen exportDialog = new Form("Export PGN...", new Item[]{ fileName });
     private final Screen saveDialog = new Alert("Save...", "Save game for next time?", null, AlertType.CONFIRMATION);

@@ -129,7 +129,7 @@ public final class Piece
 
     public String toString()
     {
-        return getColour() == Colour.WHITE ? type.toString() : type.toString().toLowerCase();
+        return is(Colour.WHITE) ? type.toString() : type.toString().toLowerCase();
     }
 
     public boolean equals(Object o)

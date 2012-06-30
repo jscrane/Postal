@@ -9,7 +9,7 @@ import javax.microedition.rms.RecordStoreException;
 import java.util.Enumeration;
 import java.util.Vector;
 
-public final class RmsGame implements Persistence
+public final class RmsPersistence implements Persistence
 {
     private interface Operation
     {
