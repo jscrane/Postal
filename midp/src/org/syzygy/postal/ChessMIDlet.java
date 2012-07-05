@@ -3,10 +3,8 @@ package org.syzygy.postal;
 import org.syzygy.postal.action.DistributedGameController;
 import org.syzygy.postal.action.State;
 import org.syzygy.postal.action.StateChangeListener;
-import org.syzygy.postal.io.AbstractTransport;
-import org.syzygy.postal.io.EventListener;
-import org.syzygy.postal.io.Persistence;
-import org.syzygy.postal.io.midp.Filer;
+import org.syzygy.postal.io.*;
+import org.syzygy.postal.io.midp.MidpFiler;
 import org.syzygy.postal.io.midp.RmsPersistence;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.ui.midp.DefaultCommand;
@@ -21,7 +19,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
     {
         this.display = Display.getDisplay(this);
         this.name = getAppProperty("org.syzygy.postal.name");
-        this.filer = new Filer(getAppProperty("midlet.directory"));
+        this.filer = new MidpFiler(getAppProperty("midlet.directory"));
         StateChangeListener stateListener = new StateChangeListener()
         {
             public void stateChanged(State state, String change)
@@ -121,7 +119,16 @@ abstract class ChessMIDlet extends PauseableMIDlet
             public void commandAction(Command c, Displayable d)
             {
                 if (c == ok)    // FIXME
-                    filer.save(fileName.getString(), controller.getMoves());
+                    filer.save(fileName.getString(), controller.getMoves(), new Completion()
+                    {
+                        public void complete(Object result)
+                        {
+                        }
+
+                        public void error(Exception e)
+                        {
+                        }
+                    });
                 display.setCurrent(main);
             }
         });

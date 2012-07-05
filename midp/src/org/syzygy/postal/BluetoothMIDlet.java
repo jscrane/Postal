@@ -58,6 +58,11 @@ public final class BluetoothMIDlet extends ChessMIDlet
                     } else
                         deviceList.set(d.getIndex(), d.toString(), null);
             }
+
+            public void error(Exception e)
+            {
+                // TODO
+            }
         });
     }
 

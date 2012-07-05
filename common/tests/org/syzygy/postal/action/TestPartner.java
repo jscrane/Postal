@@ -3,6 +3,7 @@ package org.syzygy.postal.action;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.syzygy.postal.io.AbstractTransport;
+import org.syzygy.postal.io.Completion;
 
 import java.io.IOException;
 
@@ -13,8 +14,8 @@ public final class TestPartner extends TestCase
         final String[] white = new String[]{ "e2-e4", "d2-d4" };
         final String[] black = new String[]{ "e7-e5", "d7-d5" };
         DummyTransport transport = new DummyTransport(white, black);
-        Partner partner = new Partner(new DummyCallback(black), null);
-        partner.connect(transport);
+        Partner partner = new Partner(new DummyCallback(black));
+        partner.connect(transport, dummyCompletion);
         for (int i = 0; i < white.length; i++)
             partner.send(white[i]);
         Thread.sleep(50);
@@ -26,8 +27,8 @@ public final class TestPartner extends TestCase
         final String[] white = new String[]{ "e2-e4", "d2-d4", "g1-f3" };
         final String[] black = new String[]{ "e7-e5", "d7-d5", "g8-f6" };
         DummyTransport transport = new DummyTransport(black, white);
-        Partner partner = new Partner(new DummyCallback(white), null);
-        partner.listen(transport);
+        Partner partner = new Partner(new DummyCallback(white));
+        partner.listen(transport, dummyCompletion);
         for (int i = 0; i < black.length; i++)
             partner.send(black[i]);
         Thread.sleep(50);
@@ -59,6 +60,17 @@ public final class TestPartner extends TestCase
         private int i = 0;
         private final String[] expected;
     }
+
+    private final Completion dummyCompletion = new Completion()
+    {
+        public void complete(Object result)
+        {
+        }
+
+        public void error(Exception e)
+        {
+        }
+    };
 
     private final class DummyTransport implements AbstractTransport
     {

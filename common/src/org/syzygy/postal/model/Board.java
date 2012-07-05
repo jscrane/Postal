@@ -24,33 +24,32 @@ public final class Board
     public static Board create()
     {
         Board b = new Board();
-        Colour wh = Colour.WHITE, bl = Colour.BLACK;
 
         for (char file = 'a'; file <= 'h'; file++) {
-            b.set(Piece.pawn(wh), new Square("" + file + "2"));
-            b.set(Piece.pawn(bl), new Square("" + file + "7"));
+            b.set(Piece.pawn(Colour.WHITE), new Square("" + file + "2"));
+            b.set(Piece.pawn(Colour.BLACK), new Square("" + file + "7"));
         }
 
-        b.set(Piece.rook(wh), new Square("a1"));
-        b.set(Piece.rook(bl), new Square("a8"));
-        b.set(Piece.rook(wh), new Square("h1"));
-        b.set(Piece.rook(bl), new Square("h8"));
+        b.set(Piece.rook(Colour.WHITE), new Square("a1"));
+        b.set(Piece.rook(Colour.BLACK), new Square("a8"));
+        b.set(Piece.rook(Colour.WHITE), new Square("h1"));
+        b.set(Piece.rook(Colour.BLACK), new Square("h8"));
 
-        b.set(Piece.knight(wh), new Square("b1"));
-        b.set(Piece.knight(bl), new Square("b8"));
-        b.set(Piece.knight(wh), new Square("g1"));
-        b.set(Piece.knight(bl), new Square("g8"));
+        b.set(Piece.knight(Colour.WHITE), new Square("b1"));
+        b.set(Piece.knight(Colour.BLACK), new Square("b8"));
+        b.set(Piece.knight(Colour.WHITE), new Square("g1"));
+        b.set(Piece.knight(Colour.BLACK), new Square("g8"));
 
-        b.set(Piece.bishop(wh), new Square("c1"));
-        b.set(Piece.bishop(bl), new Square("c8"));
-        b.set(Piece.bishop(wh), new Square("f1"));
-        b.set(Piece.bishop(bl), new Square("f8"));
+        b.set(Piece.bishop(Colour.WHITE), new Square("c1"));
+        b.set(Piece.bishop(Colour.BLACK), new Square("c8"));
+        b.set(Piece.bishop(Colour.WHITE), new Square("f1"));
+        b.set(Piece.bishop(Colour.BLACK), new Square("f8"));
 
-        b.set(Piece.queen(wh), new Square("d1"));
-        b.set(Piece.queen(bl), new Square("d8"));
+        b.set(Piece.queen(Colour.WHITE), new Square("d1"));
+        b.set(Piece.queen(Colour.BLACK), new Square("d8"));
 
-        b.set(Piece.king(wh), new Square("e1"));
-        b.set(Piece.king(bl), new Square("e8"));
+        b.set(Piece.king(Colour.WHITE), new Square("e1"));
+        b.set(Piece.king(Colour.BLACK), new Square("e8"));
 
         return b;
     }

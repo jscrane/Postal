@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-final class Util
+final class IOUtil
 {
     public static void closeQuietly(Connection conn)
     {

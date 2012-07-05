@@ -24,8 +24,8 @@ public final class SmsMIDlet extends ChessMIDlet
                 String n = number.getString();
                 if (c == cancel)
                     setTransport(new SmsTransport(port, null));
-                else if (n != null && !"".equals(n))
-                    setTransport(new SmsTransport(port, number.getString()));
+                else if (Util.isBlank(n))
+                    setTransport(new SmsTransport(port, n));
             }
         });
         starting();

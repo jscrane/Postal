@@ -1,17 +1,16 @@
 package org.syzygy.postal.action;
 
 import org.syzygy.postal.io.AbstractTransport;
-import org.syzygy.postal.io.EventListener;
+import org.syzygy.postal.io.Completion;
 
 public final class Partner
 {
-    public Partner(PartnerCallback callback, EventListener listener)
+    public Partner(PartnerCallback callback)
     {
         this.callback = callback;
-        this.listener = listener;
     }
 
-    public void listen(final AbstractTransport transport)
+    public void listen(final AbstractTransport transport, final Completion result)
     {
         setTransport(transport);
         new Thread(new Runnable()
@@ -20,16 +19,16 @@ public final class Partner
             {
                 try {
                     transport.listen();
+                    result.complete(null);
                     loop();
                 } catch (Exception e) {
-                    transport.close();
-                    listener.onEvent("Listen: " + transport, e);
+                    result.error(e);
                 }
             }
         }).start();
     }
 
-    public void connect(final AbstractTransport transport)
+    public void connect(final AbstractTransport transport, final Completion result)
     {
         setTransport(transport);
         new Thread(new Runnable()
@@ -39,34 +38,28 @@ public final class Partner
                 String s = waitMessage();
                 try {
                     transport.connect(s);
+                    result.complete(null);
                     callback.onSent(s);
                     loop();
                 } catch (Exception e) {
-                    transport.close();
+                    result.error(e);
                     send(s);
-                    listener.onEvent("Connect: " + transport, e);
                 }
             }
         }).start();
     }
 
-    private void loop()
+    private void loop() throws Exception
     {
         for (; ; ) {
-            try {
-                callback.onReceive(transport.receive());
-            } catch (Exception e) {
-                listener.onEvent("Receive", e);
-                return;
-            }
+            callback.onReceive(transport.receive());
             String s = waitMessage();
             try {
                 transport.send(s);
                 callback.onSent(s);
             } catch (Exception e) {
                 send(s);
-                listener.onEvent("Send", e);
-                return;
+                throw e;
             }
         }
     }
@@ -116,5 +109,4 @@ public final class Partner
 
     private final Object lock = new Object();
     private final PartnerCallback callback;
-    private final EventListener listener;
 }

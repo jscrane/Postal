@@ -51,14 +51,18 @@ public final class BluetoothDiscovery
                 else
                     devices.addElement(new BluetoothDevice((RemoteDevice) result));
             }
+
+            public void error(Exception e)
+            {
+                operation.error(e);
+            }
         };
         this.listener = new DiscoveryAdapter(c);
         try {
             agent.startInquiry(DiscoveryAgent.GIAC, listener);
         } catch (IOException e) {
-            e.printStackTrace();
             listener = null;
-            operation.complete(null);
+            operation.error(e);
             return;
         }
         new Thread(new Runnable()
@@ -75,7 +79,6 @@ public final class BluetoothDiscovery
                         try {
                             s = d.getDevice().getFriendlyName(true);
                         } catch (IOException e) {
-                            e.printStackTrace();
                             s = e.getMessage();
                         }
                         d.setName(s);

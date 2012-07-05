@@ -1,6 +1,8 @@
 package org.syzygy.postal.action;
 
+import org.syzygy.postal.Util;
 import org.syzygy.postal.io.AbstractTransport;
+import org.syzygy.postal.io.Completion;
 import org.syzygy.postal.io.EventListener;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.model.Colour;
@@ -14,7 +16,8 @@ public final class DistributedGameController extends VisualGameController implem
     public DistributedGameController(MainDisplay main, StateChangeListener stateChangeListener, EventListener transportListener)
     {
         super(main, Colour.BLACK);
-        this.partner = new Partner(this, transportListener);
+        this.transportListener = transportListener;
+        this.partner = new Partner(this);
         this.state = new State(stateChangeListener);
     }
 
@@ -31,26 +34,14 @@ public final class DistributedGameController extends VisualGameController implem
         if (state.isValidId(m.substring(0, sl))) {
             Move move = move(m.substring(sl + 1));
             if (move != null) {
-                String status;
                 String comment = move.getComment();
-                if (comment == null || "".equals(comment)) {
-                    if (move.isResignation())
-                        status = "You win!";
-                    else if (move.isCheckMate())
-                        status = "Checkmate!";
-                    else if (move.isCheck())
-                        status = "Check!";
-                    else
-                        status = "";
-                } else {
-                    status = comment;
-                    if (move.isResignation())
-                        status += ". You win!";
-                    else if (move.isCheckMate())
-                        status += ". Checkmate!";
-                    else if (move.isCheck())
-                        status += ". Check!";
-                }
+                String status = Util.isBlank(comment) ? "" : comment + ". ";
+                if (move.isResignation())
+                    status += "You win!";
+                else if (move.isCheckMate())
+                    status += "Checkmate!";
+                else if (move.isCheck())
+                    status += "Check!";
                 main.setStatus(status);
                 updateState(move);
                 myTurn(!move.isResignation() && !move.isCheckMate());
@@ -68,15 +59,27 @@ public final class DistributedGameController extends VisualGameController implem
         myTurn(false);
     }
 
-    public void start(AbstractTransport transport, Colour colour, boolean myTurn, String id)
+    public void start(final AbstractTransport transport, final Colour colour, final boolean myTurn, final String id)
     {
+        Completion c = new Completion()
+        {
+            public void complete(Object result)
+            {
+                main.setGame(getBoard(), colour, myTurn);
+                myTurn(myTurn);
+                state.setId(id);
+            }
+
+            public void error(Exception e)
+            {
+                transport.close();
+                transportListener.onEvent(transport.toString(), e);
+            }
+        };
         if (myTurn)
-            partner.connect(transport);
+            partner.connect(transport, c);
         else
-            partner.listen(transport);
-        main.setGame(getBoard(), colour, myTurn);
-        myTurn(myTurn);
-        state.setId(id);
+            partner.listen(transport, c);
     }
 
     private void updateState(Move move)
@@ -88,7 +91,7 @@ public final class DistributedGameController extends VisualGameController implem
 
     private void sendMoveWithComment(String m, String comment)
     {
-        if (comment != null && !"".equals(comment))
+        if (!Util.isBlank(comment))
             m += " " + comment;
         Move move = validate(m);
         if (move != null) {
@@ -120,6 +123,7 @@ public final class DistributedGameController extends VisualGameController implem
         rms.save(name, getMoves(), partner.toString() + " " + main.getColour() + " " + state.getId());
     }
 
+    private final EventListener transportListener;
     private final Partner partner;
     private final State state;
 }

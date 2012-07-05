@@ -2,8 +2,9 @@ package org.syzygy.postal;
 
 import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.io.Completion;
+import org.syzygy.postal.io.Filer;
 import org.syzygy.postal.io.Persistence;
-import org.syzygy.postal.io.midp.Filer;
+import org.syzygy.postal.io.midp.MidpFiler;
 import org.syzygy.postal.io.midp.RmsPersistence;
 import org.syzygy.postal.ui.midp.DefaultCommand;
 import org.syzygy.postal.ui.midp.MainCanvas;
@@ -18,7 +19,7 @@ public final class BoardMIDlet extends PauseableMIDlet
     {
         this.display = Display.getDisplay(this);
         this.name = getAppProperty("board.name");
-        this.filer = new Filer(getAppProperty("org.syzygy.postal.midlet.directory"));
+        this.filer = new MidpFiler(getAppProperty("org.syzygy.postal.midlet.directory"));
 
         this.main = new MainCanvas(new DefaultCommand(ok, new CommandListener()
         {
@@ -39,6 +40,11 @@ public final class BoardMIDlet extends PauseableMIDlet
                             Vector files = (Vector) o;
                             for (Enumeration e = files.elements(); e.hasMoreElements(); )
                                 directory.append((String) e.nextElement(), null);
+                        }
+
+                        public void error(Exception e)
+                        {
+                            // TODO
                         }
                     });
                     display.setCurrent(directory);
@@ -70,7 +76,18 @@ public final class BoardMIDlet extends PauseableMIDlet
             public void commandAction(Command c, Displayable d)
             {
                 if (c == ok)
-                    filer.save(fileName.getString(), controller.getMoves());
+                    filer.save(fileName.getString(), controller.getMoves(), new Completion()
+                    {
+                        public void complete(Object result)
+                        {
+                            // TODO
+                        }
+
+                        public void error(Exception e)
+                        {
+                            // TODO
+                        }
+                    });
                 display.setCurrent(main);
             }
         });
@@ -87,10 +104,13 @@ public final class BoardMIDlet extends PauseableMIDlet
                     {
                         public void complete(Object o)
                         {
-                            if (o != null) {
-                                controller.restart((Vector) o);
-                                display.setCurrent(main);
-                            }
+                            controller.restart((Vector) o);
+                            display.setCurrent(main);
+                        }
+
+                        public void error(Exception e)
+                        {
+                            // TODO
                         }
                     });
                 } else

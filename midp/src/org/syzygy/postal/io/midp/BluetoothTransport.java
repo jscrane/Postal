@@ -48,9 +48,12 @@ public final class BluetoothTransport extends MidpTransport
         {
             public void complete(Object result)
             {
-                String u = (String) result;
-                System.out.println(u);
-                urls[0] = u;
+                urls[0] = (String) result;
+            }
+
+            public void error(Exception e)
+            {
+                // TODO
             }
         });
         bluetooth.waitComplete();
@@ -89,9 +92,9 @@ public final class BluetoothTransport extends MidpTransport
     public void close()
     {
         super.close();
-        Util.closeQuietly(notifier);
-        Util.closeQuietly(input);
-        Util.closeQuietly(output);
+        IOUtil.closeQuietly(notifier);
+        IOUtil.closeQuietly(input);
+        IOUtil.closeQuietly(output);
     }
 
     private StreamConnectionNotifier notifier;

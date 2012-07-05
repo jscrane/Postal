@@ -1,5 +1,6 @@
 package org.syzygy.postal.io.midp;
 
+import org.syzygy.postal.Util;
 import org.syzygy.postal.io.AbstractTransport;
 
 import javax.microedition.io.Connection;
@@ -31,7 +32,7 @@ public abstract class MidpTransport implements AbstractTransport
 
     public boolean hasPeer()
     {
-        return remoteAddress != null && !"".equals(remoteAddress);
+        return !Util.isBlank(remoteAddress);
     }
 
     public void connect(String message) throws IOException
@@ -64,7 +65,7 @@ public abstract class MidpTransport implements AbstractTransport
 
     public synchronized void close()
     {
-        Util.closeQuietly(conn);
+        IOUtil.closeQuietly(conn);
         conn = null;
     }
 
