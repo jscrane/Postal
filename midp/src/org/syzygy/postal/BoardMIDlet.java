@@ -2,6 +2,7 @@ package org.syzygy.postal;
 
 import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.io.Completion;
+import org.syzygy.postal.io.EventListener;
 import org.syzygy.postal.io.Filer;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.MidpFiler;
@@ -21,6 +22,22 @@ public final class BoardMIDlet extends PauseableMIDlet
         this.name = getAppProperty("board.name");
         this.filer = new MidpFiler(getAppProperty("org.syzygy.postal.midlet.directory"));
 
+        this.eventListener = new EventListener()
+        {
+            public void onEvent(String eventClass, Object event)
+            {
+                Alert alert = new Alert(eventClass, event.toString(), null, AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                alert.setCommandListener(new CommandListener()
+                {
+                    public void commandAction(Command c, Displayable d)
+                    {
+                        destroyApp(true);
+                    }
+                });
+                display.setCurrent(alert);
+            }
+        };
         this.main = new MainCanvas(new DefaultCommand(ok, new CommandListener()
         {
             public void commandAction(Command c, Displayable disp)
@@ -44,7 +61,7 @@ public final class BoardMIDlet extends PauseableMIDlet
 
                         public void error(Exception e)
                         {
-                            // TODO
+                            eventListener.onEvent("List", e.getMessage());
                         }
                     });
                     display.setCurrent(directory);
@@ -80,12 +97,11 @@ public final class BoardMIDlet extends PauseableMIDlet
                     {
                         public void complete(Object result)
                         {
-                            // TODO
                         }
 
                         public void error(Exception e)
                         {
-                            // TODO
+                            eventListener.onEvent("Save", e.getMessage());
                         }
                     });
                 display.setCurrent(main);
@@ -110,7 +126,7 @@ public final class BoardMIDlet extends PauseableMIDlet
 
                         public void error(Exception e)
                         {
-                            // TODO
+                            eventListener.onEvent("Load", e.getMessage());
                         }
                     });
                 } else
@@ -140,6 +156,7 @@ public final class BoardMIDlet extends PauseableMIDlet
         display.setCurrent(main);
     }
 
+    private final EventListener eventListener;
     private final String name;
     private final Filer filer;
     private final Display display;

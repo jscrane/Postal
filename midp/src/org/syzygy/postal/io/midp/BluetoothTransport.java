@@ -29,48 +29,52 @@ public final class BluetoothTransport extends MidpTransport
 
     protected Connection doListen() throws IOException
     {
+        Connection c = null;
         try {
             this.notifier = (StreamConnectionNotifier) Connector.open(PREFIX + "localhost:" + uuid);
-            Connection c = notifier.acceptAndOpen();
+            c = notifier.acceptAndOpen();
             setRemoteAddress(RemoteDevice.getRemoteDevice(c).getBluetoothAddress());
             return c;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IOException("open(" + PREFIX + "localhost:" + uuid + "): " + e.getMessage());
+        } catch (IOException e) {
+            if (c == null)
+                IOUtil.closeQuietly(notifier);
+            else
+                IOUtil.closeQuietly(c);
+            throw e;
         }
     }
 
     private String discover() throws IOException
     {
         // ugh!
-        final String[] urls = new String[1];
+        final Object[] r = new Object[1];
         bluetooth.search(getRemoteAddress(), uuid, new Completion()
         {
             public void complete(Object result)
             {
-                urls[0] = (String) result;
+                r[0] = result;
             }
 
             public void error(Exception e)
             {
-                // TODO
+                r[0] = e;
             }
         });
         bluetooth.waitComplete();
-        return urls[0];
+        if (r[0] instanceof String)
+            return (String) r[0];
+        throw (IOException) r[0];
     }
 
     protected Connection doConnect(String message) throws IOException
     {
+        StreamConnection conn = null;
         try {
-            StreamConnection conn = (StreamConnection) Connector.open(discover());
+            conn = (StreamConnection) Connector.open(discover());
             send(conn, message);
             return conn;
         } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (RuntimeException e) {
-            e.printStackTrace();
+            IOUtil.closeQuietly(conn);
             throw e;
         }
     }

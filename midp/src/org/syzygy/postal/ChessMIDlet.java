@@ -42,7 +42,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
                 }
             }
         };
-        EventListener eventListener = new EventListener()
+        this.eventListener = new EventListener()
         {
             public void onEvent(String eventClass, Object event)
             {
@@ -118,7 +118,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
         {
             public void commandAction(Command c, Displayable d)
             {
-                if (c == ok)    // FIXME
+                if (c == ok)
                     filer.save(fileName.getString(), controller.getMoves(), new Completion()
                     {
                         public void complete(Object result)
@@ -127,6 +127,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
 
                         public void error(Exception e)
                         {
+                            eventListener.onEvent("Save", e.getMessage());
                         }
                     });
                 display.setCurrent(main);
@@ -167,8 +168,6 @@ abstract class ChessMIDlet extends PauseableMIDlet
 
     private void playing()
     {
-        // FIXME
-//		main.addCommand(export);
         main.addCommand(comment);
     }
 
@@ -212,6 +211,8 @@ abstract class ChessMIDlet extends PauseableMIDlet
                 controller.resign(getAndClearComment());
         }
     }));
+
+    protected final EventListener eventListener;
 
     private final Display display;
     private final String name;

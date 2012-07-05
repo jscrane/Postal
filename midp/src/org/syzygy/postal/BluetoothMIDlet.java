@@ -61,7 +61,7 @@ public final class BluetoothMIDlet extends ChessMIDlet
 
             public void error(Exception e)
             {
-                // TODO
+                eventListener.onEvent("Discovery", e.getMessage());
             }
         });
     }

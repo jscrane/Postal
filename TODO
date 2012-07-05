@@ -4,10 +4,9 @@ Postal:
 * manage state better: one state object initialised from rms
 * notification that bogus move has been received
 * when receive first move, indicate who it was from
-* handling I/O errors properly (display alerts)
-
 * exporting game in PGN notation: http://en.wikipedia.org/wiki/Portable_Game_Notation
+* if game over, save game in file, else in RMS
 
 Board:
 ------
-* remove auto-save and new commands
+* remove auto-save and new commands (???)
