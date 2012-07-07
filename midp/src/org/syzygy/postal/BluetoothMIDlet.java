@@ -10,7 +10,7 @@ import javax.microedition.lcdui.*;
 import java.io.IOException;
 import java.util.Vector;
 
-public final class BluetoothMIDlet extends ChessMIDlet
+public final class BluetoothMIDlet extends TwoPlayerMIDlet
 {
     public BluetoothMIDlet() throws IOException
     {

@@ -5,7 +5,7 @@ import org.syzygy.postal.io.midp.SmsTransport;
 import javax.microedition.io.PushRegistry;
 import javax.microedition.lcdui.*;
 
-public final class SmsMIDlet extends ChessMIDlet
+public final class SmsMIDlet extends TwoPlayerMIDlet
 {
     public SmsMIDlet()
     {

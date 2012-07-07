@@ -21,12 +21,12 @@
     <property name="suite.name" value="postal"/>
     <property name="sms.midlet.name" value="Postal"/>
     <property name="bluetooth.midlet.name" value="Local"/>
-    <property name="board.midlet.name" value="Board"/>
+    <property name="board.midlet.name" value="Chessboard"/>
     <property name="midlet.port" value="16161"/>
     <property name="midlet.uuid" value="3d37729712fb58c39d9f21b9ec992474"/>
     <property name="sms.midlet.class" value="org.syzygy.postal.SmsMIDlet"/>
     <property name="bluetooth.midlet.class" value="org.syzygy.postal.BluetoothMIDlet"/>
-    <property name="board.midlet.class" value="org.syzygy.postal.BoardMIDlet"/>
+    <property name="board.midlet.class" value="org.syzygy.postal.ChessBoardMIDlet"/>
 
     <taskdef resource="antenna.properties" classpath="${antenna.home}/antenna-bin.jar"/>
 

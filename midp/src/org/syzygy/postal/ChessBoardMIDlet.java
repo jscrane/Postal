@@ -14,9 +14,9 @@ import javax.microedition.lcdui.*;
 import java.util.Enumeration;
 import java.util.Vector;
 
-public final class BoardMIDlet extends PauseableMIDlet
+public final class ChessBoardMIDlet extends PauseableMIDlet
 {
-    public BoardMIDlet()
+    public ChessBoardMIDlet()
     {
         this.display = Display.getDisplay(this);
         this.name = getAppProperty("board.name");

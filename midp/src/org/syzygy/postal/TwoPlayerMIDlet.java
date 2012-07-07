@@ -13,9 +13,9 @@ import org.syzygy.postal.ui.midp.MainCanvas;
 import javax.microedition.lcdui.*;
 import java.util.Vector;
 
-abstract class ChessMIDlet extends PauseableMIDlet
+abstract class TwoPlayerMIDlet extends PauseableMIDlet
 {
-    ChessMIDlet()
+    TwoPlayerMIDlet()
     {
         this.display = Display.getDisplay(this);
         this.name = getAppProperty("org.syzygy.postal.name");
