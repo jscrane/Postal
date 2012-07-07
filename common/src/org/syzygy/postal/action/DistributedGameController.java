@@ -13,10 +13,10 @@ import java.util.Date;
 
 public final class DistributedGameController extends VisualGameController implements PartnerCallback
 {
-    public DistributedGameController(MainDisplay main, StateChangeListener stateChangeListener, EventListener transportListener)
+    public DistributedGameController(MainDisplay main, StateChangeListener stateChangeListener, EventListener listener)
     {
         super(main, Colour.BLACK);
-        this.transportListener = transportListener;
+        this.listener = listener;
         this.partner = new Partner(this);
         this.state = new State(stateChangeListener);
     }
@@ -73,7 +73,7 @@ public final class DistributedGameController extends VisualGameController implem
             public void error(Exception e)
             {
                 transport.close();
-                transportListener.onEvent(transport.toString(), e);
+                listener.onEvent(transport.toString(), e);
             }
         };
         if (myTurn)
@@ -123,7 +123,7 @@ public final class DistributedGameController extends VisualGameController implem
         rms.save(name, getMoves(), partner.toString() + " " + main.getColour() + " " + state.getId());
     }
 
-    private final EventListener transportListener;
+    private final EventListener listener;
     private final Partner partner;
     private final State state;
 }
