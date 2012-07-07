@@ -76,6 +76,7 @@
                     preverify="true" obfuscate="true">
             <fileset dir="build/classes"/>
             <fileset dir="etc/images">
+                <include name="45/*"/>
                 <include name="28/*"/>
                 <include name="20/*"/>
             </fileset>
