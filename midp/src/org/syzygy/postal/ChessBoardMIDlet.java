@@ -2,7 +2,6 @@ package org.syzygy.postal;
 
 import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.io.Completion;
-import org.syzygy.postal.io.EventListener;
 import org.syzygy.postal.io.Filer;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.MidpFiler;

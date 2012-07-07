@@ -21,4 +21,9 @@ abstract class PauseableMIDlet extends MIDlet
     protected abstract void onStartApp();
 
     private boolean paused = false;
+
+    protected static interface EventListener
+    {
+        void onEvent(String eventClass, Object event);
+    }
 }
