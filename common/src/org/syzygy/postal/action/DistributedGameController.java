@@ -3,7 +3,6 @@ package org.syzygy.postal.action;
 import org.syzygy.postal.Util;
 import org.syzygy.postal.io.AbstractTransport;
 import org.syzygy.postal.io.Completion;
-import org.syzygy.postal.io.EventListener;
 import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.model.Move;
@@ -13,10 +12,9 @@ import java.util.Date;
 
 public final class DistributedGameController extends VisualGameController implements PartnerCallback
 {
-    public DistributedGameController(MainDisplay main, StateChangeListener stateChangeListener, EventListener listener)
+    public DistributedGameController(MainDisplay main, StateChangeListener stateChangeListener)
     {
         super(main, Colour.BLACK);
-        this.listener = listener;
         this.partner = new Partner(this);
         this.state = new State(stateChangeListener);
     }
@@ -59,21 +57,20 @@ public final class DistributedGameController extends VisualGameController implem
         myTurn(false);
     }
 
-    public void start(final AbstractTransport transport, final Colour colour, final boolean myTurn, final String id)
+    public void start(final AbstractTransport transport, final Completion completion, final boolean myTurn, final String id)
     {
         Completion c = new Completion()
         {
             public void complete(Object result)
             {
-                main.setGame(getBoard(), colour, myTurn);
                 myTurn(myTurn);
                 state.setId(id);
+                completion.complete(result);
             }
 
             public void error(Exception e)
             {
-                transport.close();
-                listener.onEvent(transport.toString(), e);
+                completion.error(e);
             }
         };
         if (myTurn)
@@ -96,7 +93,7 @@ public final class DistributedGameController extends VisualGameController implem
         Move move = validate(m);
         if (move != null) {
             if (state.getId() == null)
-                state.setId(new Long(new Date().getTime()).toString());
+                state.setId(Long.toString(new Date().getTime()));
             partner.send(state.getId() + "/" + move.toString());
         }
     }
@@ -123,7 +120,6 @@ public final class DistributedGameController extends VisualGameController implem
         rms.save(name, getMoves(), partner.toString() + " " + main.getColour() + " " + state.getId());
     }
 
-    private final EventListener listener;
     private final Partner partner;
     private final State state;
 }

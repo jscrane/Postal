@@ -59,7 +59,7 @@ abstract class ChessMIDlet extends PauseableMIDlet
                 display.setCurrent(alert);
             }
         };
-        this.controller = new DistributedGameController(main, stateListener, eventListener);
+        this.controller = new DistributedGameController(main, stateListener);
     }
 
     protected void destroyApp(boolean unconditional)
@@ -70,13 +70,27 @@ abstract class ChessMIDlet extends PauseableMIDlet
     /**
      * Called from one of the find() methods below with a transport for communicating with an opponent.
      */
-    void setTransport(AbstractTransport transport)
+    protected void setTransport(final AbstractTransport transport)
     {
-        if (isNewGame && transport.hasPeer()) {
+        if (isNewGame && transport.isConnected()) {
             colour = Colour.WHITE;
             isMyTurn = true;
         }
-        controller.start(transport, colour, isMyTurn, id);
+        final boolean myTurn = isMyTurn;
+        Completion c = new Completion()
+        {
+            public void complete(Object result)
+            {
+                main.setGame(controller.getBoard(), colour, myTurn);
+            }
+
+            public void error(Exception e)
+            {
+                transport.close();
+                eventListener.onEvent(transport.toString(), e);
+            }
+        };
+        controller.start(transport, c, isMyTurn, id);
         display.setCurrent(main);
     }
 

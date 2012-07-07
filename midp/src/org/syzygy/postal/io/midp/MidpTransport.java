@@ -30,7 +30,7 @@ public abstract class MidpTransport implements AbstractTransport
         return getPrefix() + getRemoteAddress();
     }
 
-    public boolean hasPeer()
+    public boolean isConnected()
     {
         return !Util.isBlank(remoteAddress);
     }

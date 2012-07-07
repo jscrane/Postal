@@ -92,7 +92,7 @@ public final class TestPartner extends TestCase
         {
         }
 
-        public boolean hasPeer()
+        public boolean isConnected()
         {
             return false;
         }

@@ -9,7 +9,7 @@ import java.util.Enumeration;
 
 public class VisualGameController extends GameController
 {
-    protected VisualGameController(MainDisplay main, Colour colour)
+    VisualGameController(MainDisplay main, Colour colour)
     {
         this.main = main;
         main.setGame(getBoard(), colour, colour == Colour.WHITE);
@@ -25,7 +25,7 @@ public class VisualGameController extends GameController
         return n;
     }
 
-    protected Move move(String m)
+    Move move(String m)
     {
         Move move = validate(m);
         if (move == null)
@@ -53,5 +53,5 @@ public class VisualGameController extends GameController
         main.setMove(getNumberOfMoves(), move.toString());
     }
 
-    protected final MainDisplay main;
+    final MainDisplay main;
 }

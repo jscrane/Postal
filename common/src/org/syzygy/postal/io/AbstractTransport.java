@@ -6,7 +6,7 @@ public interface AbstractTransport
 {
     void setRemoteAddress(String remoteAddress);
 
-    boolean hasPeer();
+    boolean isConnected();
 
     void connect(String message) throws IOException;
 
