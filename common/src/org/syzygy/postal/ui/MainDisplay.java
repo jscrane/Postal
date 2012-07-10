@@ -2,6 +2,7 @@ package org.syzygy.postal.ui;
 
 import org.syzygy.postal.model.Board;
 import org.syzygy.postal.model.Colour;
+import org.syzygy.postal.model.Move;
 
 public interface MainDisplay
 {
@@ -15,11 +16,11 @@ public interface MainDisplay
 
     public Colour getColour();
 
-    public String getMove();
+    public Move getMove();
 
     public void clearMove();
 
-    public void setMove(int n, String move);
+    public void setMove(int n, Move move);
 
     public void setGame(Board board, Colour colour, boolean isMyTurn);
 }

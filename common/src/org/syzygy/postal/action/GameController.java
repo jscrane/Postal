@@ -10,15 +10,8 @@ import java.util.Vector;
 
 public class GameController
 {
-    public Move validate(String m) throws IllegalMoveException
+    public Move validate(Move move) throws IllegalMoveException
     {
-        Move move;
-        try {
-            move = Move.valueOf(m);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalMoveException("Internal Error: " + e.getClass().getName());
-        }
         if (!move.isResignation())
             validation.validate(board, move);
         return move;

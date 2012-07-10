@@ -20,12 +20,12 @@ public class VisualGameController extends GameController
         int n;
         for (n = 0; moves.hasMoreElements(); n++) {
             String m = (String) moves.nextElement();
-            move(m.substring(m.indexOf(' ') + 1));
+            move(Move.valueOf(m.substring(m.indexOf(' ') + 1)));
         }
         return n;
     }
 
-    Move move(String m)
+    Move move(Move m)
     {
         Move move = validate(m);
         if (move == null)
@@ -35,7 +35,7 @@ public class VisualGameController extends GameController
         return move;
     }
 
-    public Move validate(String m)
+    public Move validate(Move m)
     {
         try {
             return super.validate(m);
@@ -50,7 +50,7 @@ public class VisualGameController extends GameController
         super.complete(move);
         if (move.isCapture())
             main.setAdvantage(getBoard().getMaterialAdvantage());
-        main.setMove(getNumberOfMoves(), move.toString());
+        main.setMove(getNumberOfMoves(), move);
     }
 
     final MainDisplay main;

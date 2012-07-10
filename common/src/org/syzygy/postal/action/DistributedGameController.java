@@ -30,7 +30,7 @@ public final class DistributedGameController extends VisualGameController implem
         System.out.println("received: " + m);
         int sl = m.indexOf('/');
         if (state.isValidId(m.substring(0, sl))) {
-            Move move = move(m.substring(sl + 1));
+            Move move = move(Move.valueOf(m.substring(sl + 1)));
             if (move != null) {
                 String comment = move.getComment();
                 String status = Util.isBlank(comment) ? "" : comment + ". ";
@@ -86,12 +86,12 @@ public final class DistributedGameController extends VisualGameController implem
             state.gameOver();
     }
 
-    private void sendMoveWithComment(String m, String comment)
+    private void sendMoveWithComment(Move m, String comment)
     {
-        if (!Util.isBlank(comment))
-            m += " " + comment;
         Move move = validate(m);
         if (move != null) {
+            if (!Util.isBlank(comment))
+                move = new Move(move.getFrom(), move.getTo(), comment);
             if (state.getId() == null)
                 state.setId(Long.toString(new Date().getTime()));
             partner.send(state.getId() + "/" + move.toString());
@@ -100,14 +100,14 @@ public final class DistributedGameController extends VisualGameController implem
 
     public void processMove(String comment)
     {
-        String m = main.getMove();
+        Move m = main.getMove();
         if (m != null)
             sendMoveWithComment(m, comment);
     }
 
     public void resign(String comment)
     {
-        sendMoveWithComment((main.getColour() == Colour.WHITE ? Move.WHITE_RESIGNS : Move.BLACK_RESIGNS).toString(), comment);
+        sendMoveWithComment(main.getColour() == Colour.WHITE ? Move.WHITE_RESIGNS : Move.BLACK_RESIGNS, comment);
     }
 
     public boolean needsSave()

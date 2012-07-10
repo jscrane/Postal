@@ -1,6 +1,7 @@
 package org.syzygy.postal.action;
 
 import org.syzygy.postal.model.Colour;
+import org.syzygy.postal.model.Move;
 import org.syzygy.postal.ui.MainDisplay;
 
 import java.util.Vector;
@@ -14,7 +15,12 @@ public final class SharedGameController extends VisualGameController
 
     public void processMove()
     {
-        if (move(main.getMove()) != null)
+        processMove(main.getMove());
+    }
+
+    public void processMove(Move move)
+    {
+        if (move(move) != null)
             main.setColour(main.getColour() == Colour.WHITE ? Colour.BLACK : Colour.WHITE);
     }
 

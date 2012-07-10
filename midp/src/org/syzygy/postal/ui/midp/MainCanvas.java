@@ -2,6 +2,7 @@ package org.syzygy.postal.ui.midp;
 
 import org.syzygy.postal.model.Board;
 import org.syzygy.postal.model.Colour;
+import org.syzygy.postal.model.Move;
 import org.syzygy.postal.ui.MainDisplay;
 
 import javax.microedition.lcdui.Canvas;
@@ -62,12 +63,12 @@ public final class MainCanvas extends Canvas implements MainDisplay
         moveEntryItem.repaint();
     }
 
-    public String getMove()
+    public Move getMove()
     {
-        return moveEntryItem.getString();
+        return Move.valueOf(moveEntryItem.getString());
     }
 
-    public void setMove(int n, String move)
+    public void setMove(int n, Move move)
     {
         int m = (n + 1) / 2;
         boolean white = (n % 2) != 0;
@@ -82,10 +83,7 @@ public final class MainCanvas extends Canvas implements MainDisplay
                 ms = Integer.toString(m) + "...";
         }
         status.repaint();
-        int space = move.indexOf(' ');
-        if (space > 0)
-            move = move.substring(0, space);
-        moveEntryItem.setLabel(ms + " " + move);
+        moveEntryItem.setLabel(ms + " " + move.getComment());
         clearMove();
         redrawBoard();
     }
@@ -133,8 +131,6 @@ public final class MainCanvas extends Canvas implements MainDisplay
         public abstract String toString();
 
         public abstract void setString(String s);
-
-        public abstract void repaint();
     }
 
     private final class MoveEntryItem extends TextItem
