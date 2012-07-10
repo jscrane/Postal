@@ -83,7 +83,7 @@ public final class MainCanvas extends Canvas implements MainDisplay
                 ms = Integer.toString(m) + "...";
         }
         status.repaint();
-        moveEntryItem.setLabel(ms + " " + move.getComment());
+        moveEntryItem.setLabel(ms + " " + move.toString());
         clearMove();
         redrawBoard();
     }
