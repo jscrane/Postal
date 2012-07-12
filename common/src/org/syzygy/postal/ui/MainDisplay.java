@@ -16,8 +16,6 @@ public interface MainDisplay
 
     public Colour getColour();
 
-    public Move getMove();
-
     public void clearMove();
 
     public void setMove(int n, Move move);

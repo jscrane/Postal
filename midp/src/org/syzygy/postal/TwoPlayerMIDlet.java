@@ -3,10 +3,14 @@ package org.syzygy.postal;
 import org.syzygy.postal.action.DistributedGameController;
 import org.syzygy.postal.action.State;
 import org.syzygy.postal.action.StateChangeListener;
-import org.syzygy.postal.io.*;
+import org.syzygy.postal.io.AbstractTransport;
+import org.syzygy.postal.io.Completion;
+import org.syzygy.postal.io.Filer;
+import org.syzygy.postal.io.Persistence;
 import org.syzygy.postal.io.midp.MidpFiler;
 import org.syzygy.postal.io.midp.RmsPersistence;
 import org.syzygy.postal.model.Colour;
+import org.syzygy.postal.model.Move;
 import org.syzygy.postal.ui.midp.DefaultCommand;
 import org.syzygy.postal.ui.midp.MainCanvas;
 
@@ -215,9 +219,11 @@ abstract class TwoPlayerMIDlet extends PauseableMIDlet
         {
             if (c == quit)
                 tryQuit();
-            else if (c == move)
-                controller.processMove(getAndClearComment());
-            else if (c == export)
+            else if (c == move) {
+                Move m = main.getMove();
+                if (m != null)
+                    controller.sendMoveWithComment(m, getAndClearComment());
+            } else if (c == export)
                 display.setCurrent(exportDialog);
             else if (c == comment)
                 display.setCurrent(commentText);

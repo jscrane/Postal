@@ -86,7 +86,7 @@ public final class DistributedGameController extends VisualGameController implem
             state.gameOver();
     }
 
-    private void sendMoveWithComment(Move m, String comment)
+    public void sendMoveWithComment(Move m, String comment)
     {
         Move move = validate(m);
         if (move != null) {
@@ -96,13 +96,6 @@ public final class DistributedGameController extends VisualGameController implem
                 state.setId(Long.toString(new Date().getTime()));
             partner.send(state.getId() + "/" + move.toString());
         }
-    }
-
-    public void processMove(String comment)
-    {
-        Move m = main.getMove();
-        if (m != null)
-            sendMoveWithComment(m, comment);
     }
 
     public void resign(String comment)

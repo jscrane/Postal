@@ -13,11 +13,6 @@ public final class SharedGameController extends VisualGameController
         super(main, Colour.WHITE);
     }
 
-    public void processMove()
-    {
-        processMove(main.getMove());
-    }
-
     public void processMove(Move move)
     {
         if (move(move) != null)

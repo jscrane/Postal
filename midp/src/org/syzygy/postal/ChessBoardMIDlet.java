@@ -20,54 +20,6 @@ public final class ChessBoardMIDlet extends PauseableMIDlet
         this.display = Display.getDisplay(this);
         this.name = getAppProperty("board.name");
         this.filer = new MidpFiler(getAppProperty("org.syzygy.postal.midlet.directory"));
-
-        this.eventListener = new EventListener()
-        {
-            public void onEvent(String eventClass, Object event)
-            {
-                Alert alert = new Alert(eventClass, event.toString(), null, AlertType.ERROR);
-                alert.setTimeout(Alert.FOREVER);
-                alert.setCommandListener(new CommandListener()
-                {
-                    public void commandAction(Command c, Displayable d)
-                    {
-                        destroyApp(true);
-                    }
-                });
-                display.setCurrent(alert);
-            }
-        };
-        this.main = new MainCanvas(new DefaultCommand(ok, new CommandListener()
-        {
-            public void commandAction(Command c, Displayable disp)
-            {
-                if (c == quit)
-                    display.setCurrent(saveDialog);
-                else if (c == ok)
-                    controller.processMove();
-                else if (c == saveGame)
-                    display.setCurrent(file);
-                else if (c == loadGame) {
-                    directory.deleteAll();
-                    filer.list(new Completion()
-                    {
-                        public void complete(Object o)
-                        {
-                            Vector files = (Vector) o;
-                            for (Enumeration e = files.elements(); e.hasMoreElements(); )
-                                directory.append((String) e.nextElement(), null);
-                        }
-
-                        public void error(Exception e)
-                        {
-                            eventListener.onEvent("List", e.getMessage());
-                        }
-                    });
-                    display.setCurrent(directory);
-                }
-            }
-        }));
-        this.controller = new SharedGameController(main);
     }
 
     protected void destroyApp(boolean unconditional)
@@ -155,12 +107,25 @@ public final class ChessBoardMIDlet extends PauseableMIDlet
         display.setCurrent(main);
     }
 
-    private final EventListener eventListener;
+    private final EventListener eventListener = new EventListener()
+    {
+        public void onEvent(String eventClass, Object event)
+        {
+            Alert alert = new Alert(eventClass, event.toString(), null, AlertType.ERROR);
+            alert.setTimeout(Alert.FOREVER);
+            alert.setCommandListener(new CommandListener()
+            {
+                public void commandAction(Command c, Displayable d)
+                {
+                    destroyApp(true);
+                }
+            });
+            display.setCurrent(alert);
+        }
+    };
     private final String name;
     private final Filer filer;
     private final Display display;
-    private final MainCanvas main;
-    private final SharedGameController controller;
     private final TextField fileName = new TextField(null, null, 64, TextField.ANY);
     private final Form file = new Form("Save", new Item[]{ fileName });
     private final List directory = new List("Load", List.IMPLICIT);
@@ -171,4 +136,35 @@ public final class ChessBoardMIDlet extends PauseableMIDlet
     private final Command saveGame = new Command("Save", Command.SCREEN, 3);
     private final Command loadGame = new Command("Load", Command.SCREEN, 3);
     private final Screen saveDialog = new Alert("Save...", "Save game for next time?", null, AlertType.CONFIRMATION);
+    private final MainCanvas main = new MainCanvas(new DefaultCommand(ok, new CommandListener()
+    {
+        public void commandAction(Command c, Displayable disp)
+        {
+            if (c == quit)
+                display.setCurrent(saveDialog);
+            else if (c == ok)
+                controller.processMove(main.getMove());
+            else if (c == saveGame)
+                display.setCurrent(file);
+            else if (c == loadGame) {
+                directory.deleteAll();
+                filer.list(new Completion()
+                {
+                    public void complete(Object o)
+                    {
+                        Vector files = (Vector) o;
+                        for (Enumeration e = files.elements(); e.hasMoreElements(); )
+                            directory.append((String) e.nextElement(), null);
+                    }
+
+                    public void error(Exception e)
+                    {
+                        eventListener.onEvent("List", e.getMessage());
+                    }
+                });
+                display.setCurrent(directory);
+            }
+        }
+    }));
+    private final SharedGameController controller = new SharedGameController(main);
 }
