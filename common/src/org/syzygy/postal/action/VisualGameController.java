@@ -25,14 +25,14 @@ public class VisualGameController extends GameController
         return n;
     }
 
-    Move move(Move m)
+    public Move move(Move m)
     {
-        Move move = validate(m);
-        if (move == null)
+        try {
+            return super.move(m);
+        } catch (IllegalMoveException e) {
             main.clearMove();
-        else
-            complete(move);
-        return move;
+        }
+        return null;
     }
 
     public Move validate(Move m)

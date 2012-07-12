@@ -143,7 +143,7 @@ public final class ChessBoardMIDlet extends PauseableMIDlet
             if (c == quit)
                 display.setCurrent(saveDialog);
             else if (c == ok)
-                controller.processMove(main.getMove());
+                controller.move(main.getMove());
             else if (c == saveGame)
                 display.setCurrent(file);
             else if (c == loadGame) {

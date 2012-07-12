@@ -63,10 +63,7 @@ public final class TestGame extends TestCase
 
     private Move move(String m) throws IllegalMoveException
     {
-        Move move = game.validate(Move.valueOf(m));
-        if (m != null)
-            game.complete(move);
-        return move;
+        return game.move(Move.valueOf(m));
     }
 
     private final GameController game = new GameController();

@@ -10,6 +10,14 @@ import java.util.Vector;
 
 public class GameController
 {
+    public Move move(Move m) throws IllegalMoveException
+    {
+        Move move = validate(m);
+        if (move != null)
+            complete(move);
+        return move;
+    }
+
     public Move validate(Move move) throws IllegalMoveException
     {
         if (!move.isResignation())

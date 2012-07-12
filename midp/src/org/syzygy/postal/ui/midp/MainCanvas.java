@@ -73,10 +73,12 @@ public final class MainCanvas extends Canvas implements MainDisplay
         int m = (n + 1) / 2;
         boolean white = (n % 2) != 0;
         String ms;
+        Colour colour = Colour.BLACK;
         if (white) {
             status.setString("Black to move");
             ms = Integer.toString(m);
         } else {
+            colour = Colour.WHITE;
             status.setString("White to move");
             ms = moveEntryItem.getLabel();
             if (ms == null)
@@ -84,6 +86,7 @@ public final class MainCanvas extends Canvas implements MainDisplay
         }
         status.repaint();
         moveEntryItem.setLabel(ms + " " + move.toString());
+        boardImage.setColour(colour);
         clearMove();
         redrawBoard();
     }

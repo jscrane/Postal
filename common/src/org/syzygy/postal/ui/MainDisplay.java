@@ -12,8 +12,6 @@ public interface MainDisplay
 
     public void setIsMyTurn(boolean isMyTurn);
 
-    public void setColour(Colour colour);
-
     public Colour getColour();
 
     public void clearMove();
