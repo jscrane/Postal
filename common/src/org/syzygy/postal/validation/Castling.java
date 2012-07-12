@@ -64,7 +64,9 @@ final class Castling implements BoardValidator, BoardObserver
         if (p.is(colour)) {
             if (p.isA(Piece.KING)) {
                 kMoved = true;
-                int dx = move.getDx();
+                int dx = move.getDx(), dy = move.getDy();
+                if (dy != 0 || (dx != 2 && dx != -2))
+                    return;
                 if (dx == 2)
                     board.set(board.remove(h), f);
                 else

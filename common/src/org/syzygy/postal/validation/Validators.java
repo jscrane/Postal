@@ -48,7 +48,7 @@ public class Validators implements BoardValidator, BoardObserver, ValidationUtil
         return n;
     }
 
-    private void runValidation(Board board, Move move) throws IllegalMoveException
+    public void runValidation(Board board, Move move) throws IllegalMoveException
     {
         for (Enumeration e = validators.elements(); e.hasMoreElements(); ) {
             Object o = e.nextElement();

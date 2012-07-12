@@ -15,11 +15,8 @@ public final class TestBlackCastling extends BoardValidatorSupport
         validator.validate(board, m);
         board.move(m);
         validator.confirm(board, m);
-        Piece king = board.get(g8), rook = board.get(f8);
-        assertNotNull(king);
-        assertTrue(king.isA(Piece.KING));
-        assertNotNull(rook);
-        assertTrue(rook.isA(Piece.ROOK));
+        assertEquals(Piece.king(Colour.BLACK), board.get(g8));
+        assertEquals(Piece.rook(Colour.BLACK), board.get(f8));
     }
 
     public void testKingsSideRookAbsent()
@@ -40,11 +37,8 @@ public final class TestBlackCastling extends BoardValidatorSupport
         validator.validate(board, m);
         board.move(m);
         validator.confirm(board, m);
-        Piece king = board.get(c8), rook = board.get(d8);
-        assertNotNull(king);
-        assertTrue(king.isA(Piece.KING));
-        assertNotNull(rook);
-        assertTrue(rook.isA(Piece.ROOK));
+        assertEquals(Piece.king(Colour.BLACK), board.get(c8));
+        assertEquals(Piece.rook(Colour.BLACK), board.get(d8));
     }
 
     public void testQueensSideRookAbsent()

@@ -5,12 +5,6 @@ import org.syzygy.postal.model.Piece;
 
 public final class TestObstruction extends BoardValidatorSupport
 {
-    protected void setUp()
-    {
-        this.board = new Board();
-        this.validator = new Obstruction();
-    }
-
     public void testCannotObstructKnight() throws Exception
     {
         board.set(Piece.knight(white), b1);
@@ -67,6 +61,6 @@ public final class TestObstruction extends BoardValidatorSupport
         validator.validate(board, move(a8, a1));
     }
 
-    private Board board;
-    private BoardValidator validator;
+    private final Board board = new Board();
+    private final BoardValidator validator = new Obstruction();
 }

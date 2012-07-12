@@ -86,6 +86,52 @@ public final class TestCheck extends BoardValidatorSupport
         Assert.assertTrue(move.isCheckMate());
     }
 
+    public void testIsNotCheckMateIfCanCaptureAttacker() throws Exception
+    {
+        Board board = new Board();
+        board.set(Piece.king(black), e8);
+        board.set(Piece.pawn(black), f7);
+        board.set(Piece.king(white), e1);
+        board.set(Piece.queen(white), d1);
+        Move move = move(d1, d8);
+        check.validate(board, move);
+        board.move(move);
+        check.confirm(board, move);
+        Assert.assertTrue(move.isCheck());
+        Assert.assertFalse(move.isCheckMate());
+    }
+
+    public void testIsNotCheckMateIfCanBlock() throws Exception
+    {
+        Board board = new Board();
+        board.set(Piece.king(black), e8);
+        board.set(Piece.rook(black), d6);
+        board.set(Piece.rook(white), a7);
+        board.set(Piece.rook(white), b1);
+        board.set(Piece.king(white), e1);
+        Move move = move(b1, b8);
+        check.validate(board, move);
+        board.move(move);
+        check.confirm(board, move);
+        Assert.assertTrue(move.isCheck());
+        Assert.assertFalse(move.isCheckMate());
+    }
+
+    public void testIsCheckMateWhenCannotCaptureAttacker() throws Exception
+    {
+        Board board = new Board();
+        board.set(Piece.king(black), e8);
+        board.set(Piece.rook(white), a7);
+        board.set(Piece.rook(white), b1);
+        board.set(Piece.king(white), e1);
+        Move move = move(b1, b8);
+        check.validate(board, move);
+        board.move(move);
+        check.confirm(board, move);
+        Assert.assertTrue(move.isCheck());
+        Assert.assertTrue(move.isCheckMate());
+    }
+
     public void testFindKing()
     {
         Board board = Board.create();

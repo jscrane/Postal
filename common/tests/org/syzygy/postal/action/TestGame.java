@@ -2,7 +2,10 @@ package org.syzygy.postal.action;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.model.Move;
+import org.syzygy.postal.model.Piece;
+import org.syzygy.postal.model.Square;
 import org.syzygy.postal.validation.IllegalMoveException;
 
 import java.util.Enumeration;
@@ -37,10 +40,8 @@ public final class TestGame extends TestCase
 
     public void testGameMoves() throws Exception
     {
-        String[] moves = { "e2-e4", "c7-c5", "g1-f3", "d7-d6", "d2-d4",
-                "c5xd4", "f3xd4", "g8-f6", "b1-c3" };
-        for (int i = 0; i < moves.length; i++)
-            Assert.assertNotNull(move(moves[i]));
+        String[] moves = { "e2-e4", "c7-c5", "g1-f3", "d7-d6", "d2-d4", "c5xd4", "f3xd4", "g8-f6", "b1-c3" };
+        move(moves);
         int i = 0;
         for (Enumeration e = game.getMoves(); e.hasMoreElements(); i++) {
             Move m = (Move) e.nextElement();
@@ -59,6 +60,18 @@ public final class TestGame extends TestCase
             System.out.println(moves[i]);
             Assert.assertNotNull(move(moves[i]));
         }
+    }
+
+    public void testQueenExchange() throws Exception
+    {
+        move(new String[]{ "d2-d4", "d7-d5", "e2-e4", "e7-e5", "d4xe5", "d5xe4", "d1xd8", "e8xd8" });
+        Assert.assertEquals(Piece.king(Colour.BLACK), game.getBoard().get(new Square("d8")));
+    }
+
+    private void move(String[] moves) throws IllegalMoveException
+    {
+        for (int i = 0; i < moves.length; i++)
+            Assert.assertNotNull(move(moves[i]));
     }
 
     private Move move(String m) throws IllegalMoveException

@@ -51,8 +51,12 @@ public final class Check implements BoardValidator, BoardObserver
             for (int i = f - 1; i <= f + 1; i++)
                 for (int j = r - 1; j <= r + 1; j++)
                     if (i >= 0 && i <= 7 && j >= 0 && j <= 7)
-                        if (!board.isOccupied(j, i) && !utils.isAttacked(board, new Square(j, i), board.getPieces(my)))
+                        try {
+                            utils.runValidation(board, new Move(oppKing, new Square(j, i)));
                             return;
+                        } catch (IllegalMoveException _) {
+                            // can't move there
+                        }
             move.setIsCheckMate(true);
         }
     }
