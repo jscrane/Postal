@@ -1,0 +1,4 @@
+<resources>
+    <item name="status" type="id"/>
+    <item name="board" type="id"/>
+</resources>

@@ -35,6 +35,19 @@ public class Validators implements BoardValidator, BoardObserver, ValidationUtil
         return false;
     }
 
+    public int attackerCount(Board board, Square s, Enumeration pieces)
+    {
+        int n = 0;
+        while (pieces.hasMoreElements())
+            try {
+                runValidation(board, new Move((Square) pieces.nextElement(), s));
+                n++;
+            } catch (IllegalMoveException e) {
+                // ignored
+            }
+        return n;
+    }
+
     private void runValidation(Board board, Move move) throws IllegalMoveException
     {
         for (Enumeration e = validators.elements(); e.hasMoreElements(); ) {

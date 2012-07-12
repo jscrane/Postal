@@ -16,5 +16,14 @@ public final class TestValidationUtils extends BoardValidatorSupport
         Assert.assertTrue(utils.isAttacked(board, b4, board.getPieces(Colour.BLACK)));
     }
 
+    public void testAttackerCount()
+    {
+        Board board = new Board();
+        board.set(Piece.rook(black), b8);
+        board.set(Piece.rook(black), b1);
+        board.set(Piece.pawn(white), b4);
+        Assert.assertEquals(2, utils.attackerCount(board, b4, board.getPieces(Colour.BLACK)));
+    }
+
     private final ValidationUtils utils = new Validators();
 }
