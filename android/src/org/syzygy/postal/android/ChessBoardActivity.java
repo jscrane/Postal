@@ -2,37 +2,34 @@ package org.syzygy.postal.android;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import org.syzygy.postal.R;
 import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.model.Move;
 
+import java.util.ArrayList;
 import java.util.Vector;
-
-import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.LinearLayout.LayoutParams;
-import static android.widget.LinearLayout.VERTICAL;
 
 public final class ChessBoardActivity extends Activity implements MoveListener
 {
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(VERTICAL);
-        TextView textView = new TextView(this);
-        textView.setText("hello world");
-        layout.addView(textView, new LayoutParams(FILL_PARENT, WRAP_CONTENT));
-        BoardView boardView = new BoardView(this);
-        layout.addView(boardView, new LayoutParams(FILL_PARENT, WRAP_CONTENT));
-        setContentView(layout);
+        setContentView(R.layout.main);
 
-        controller = new SharedGameController(new AndroidMainDisplay(textView, boardView, this));
+        TextView status = (TextView) findViewById(R.id.status);
+        TextView advantage = (TextView) findViewById(R.id.advantage);
+        BoardView board = (BoardView) findViewById(R.id.board);
+        ListView moves = (ListView) findViewById(R.id.moves);
+
+        // could use a custom adapter here which supplies its own row view
+        // see http://www.vogella.com/articles/AndroidListView/article.html
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row, R.id.label, new ArrayList<String>());
+        moves.setAdapter(adapter);
+        controller = new SharedGameController(new AndroidMainDisplay(status, advantage, board, adapter, this));
         controller.restart(new Vector(0));
     }
 
@@ -40,6 +37,6 @@ public final class ChessBoardActivity extends Activity implements MoveListener
 
     public void onMove(Move move)
     {
-        controller.processMove(move);
+        controller.move(move);
     }
 }

@@ -1,9 +1,6 @@
 ChessBoardActivity
-* cleanup (main.xml)
-* scrollable list of moves at the bottom of the display
 * jump to move in scrollable list
-* animate dragging piece
-* copyright notice
+* saving and loading
 
 General
 * exporting in PGN

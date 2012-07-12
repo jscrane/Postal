@@ -1,4 +1,6 @@
 <resources>
     <item name="status" type="id"/>
     <item name="board" type="id"/>
+    <item name="moves" type="id"/>
+    <item name="advantage" type="id"/>
 </resources>

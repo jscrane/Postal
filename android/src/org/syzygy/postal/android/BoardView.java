@@ -3,6 +3,7 @@ package org.syzygy.postal.android;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.*;
+import android.util.AttributeSet;
 import android.view.View;
 import org.syzygy.postal.R;
 import org.syzygy.postal.model.Board;
@@ -23,13 +24,13 @@ import static org.syzygy.postal.model.Piece.*;
 public final class BoardView extends View
 {
     private final Map<Piece, Bitmap> bitmaps = new HashMap<Piece, Bitmap>();
-    private Colour colour;
+    private Colour colour = Colour.WHITE;
     private Square highlight = null;
     private Board board;
 
-    public BoardView(Context context)
+    public BoardView(Context context, AttributeSet attrs)
     {
-        super(context);
+        super(context, attrs);
 
         Resources resources = context.getResources();
         bitmaps.put(pawn(BLACK), BitmapFactory.decodeResource(resources, R.drawable.bp));
@@ -44,7 +45,6 @@ public final class BoardView extends View
         bitmaps.put(queen(WHITE), BitmapFactory.decodeResource(resources, R.drawable.wq));
         bitmaps.put(king(BLACK), BitmapFactory.decodeResource(resources, R.drawable.bk));
         bitmaps.put(king(WHITE), BitmapFactory.decodeResource(resources, R.drawable.wk));
-        colour = Colour.WHITE;
     }
 
     public void setBoard(Board b)
@@ -62,9 +62,12 @@ public final class BoardView extends View
         return colour;
     }
 
-    public void setHighlight(String highlight)
+    public void setHighlight(Square h)
     {
-        this.highlight = highlight == null ? null : new Square(highlight);
+        Square g = highlight;
+        this.highlight = h;
+        if ((g == null && h != null) || (g != null && !g.equals(h)))
+            invalidate();
     }
 
     private int getSide()
@@ -78,11 +81,6 @@ public final class BoardView extends View
     {
         super.onDraw(canvas);
 
-        drawBoard(canvas, board);
-    }
-
-    private void drawBoard(Canvas canvas, Board board)
-    {
         int side = getSide();
         Bitmap bb = Bitmap.createBitmap(side, side, RGB_565);
         Canvas cb = new Canvas(bb);
@@ -133,6 +131,8 @@ public final class BoardView extends View
     {
         Paint p = new Paint();
         p.setColor(Color.BLACK);
+        p.setStrokeWidth(5);
+        p.setStyle(Paint.Style.STROKE);
         int r = getRankForColour(s), f = getFileForColour(s);
         int left = d * f, top = d * r;
         canvas.drawRect(left, top, left + d, top + d, p);
@@ -148,15 +148,9 @@ public final class BoardView extends View
     }
 
     @Override
-    protected int getSuggestedMinimumHeight()
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        return bitmaps.values().iterator().next().getHeight() * 8;
-    }
-
-    @Override
-    protected int getSuggestedMinimumWidth()
-    {
-        return getSuggestedMinimumHeight();
+        setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(widthMeasureSpec));
     }
 
     public Square getSquareAt(float x, float y)
