@@ -4,3 +4,4 @@ ChessBoardActivity
 
 General
 * exporting in PGN
+* fix checkmate bug
