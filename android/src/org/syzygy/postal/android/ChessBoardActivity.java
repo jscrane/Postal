@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,20 +14,16 @@ import android.widget.TextView;
 import org.syzygy.postal.R;
 import org.syzygy.postal.action.SharedGameController;
 import org.syzygy.postal.model.Move;
+import org.syzygy.postal.model.Square;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
 
-public final class ChessBoardActivity extends Activity implements MoveListener
+public final class ChessBoardActivity extends Activity
 {
     private SharedGameController controller;
-
-    public void onMove(Move move)
-    {
-        controller.move(move);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,12 +33,46 @@ public final class ChessBoardActivity extends Activity implements MoveListener
 
         TextView status = (TextView) findViewById(R.id.status);
         TextView advantage = (TextView) findViewById(R.id.advantage);
-        BoardView board = (BoardView) findViewById(R.id.board);
+        final BoardView board = (BoardView) findViewById(R.id.board);
         ListView moves = (ListView) findViewById(R.id.moves);
+
+        board.setFocusable(true);
+        board.setFocusableInTouchMode(true);
+        board.setOnTouchListener(new View.OnTouchListener()
+        {
+            private Square from;
+
+            public boolean onTouch(View v, MotionEvent e)
+            {
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        from = board.getSquareAt(e.getX(), e.getY());
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        from = null;
+                        board.setHighlight(null);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (from != null) {
+                            Square to = board.getSquareAt(e.getX(), e.getY());
+                            if (to != null)
+                                controller.move(new Move(from, to));
+                            from = null;
+                            board.setHighlight(null);
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (from != null)
+                            board.setHighlight(board.getSquareAt(e.getX(), e.getY()));
+                        break;
+                }
+                return true;
+            }
+        });
 
         RoundAdapter adapter = new RoundAdapter(this, new ArrayList<Round>());
         moves.setAdapter(adapter);
-        controller = new SharedGameController(new AndroidMainDisplay(status, advantage, board, adapter, this));
+        controller = new SharedGameController(new AndroidMainDisplay(status, advantage, board, adapter));
 
         Vector<String> m = new Vector<String>();
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);

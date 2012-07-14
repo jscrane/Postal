@@ -2,7 +2,7 @@ package org.syzygy.postal.android;
 
 import org.syzygy.postal.model.Move;
 
-public final class Round
+final class Round
 {
     public final Move white;
     public Move black;

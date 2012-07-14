@@ -3,6 +3,7 @@ ChessBoardActivity
 * offering draw
 * if game over, offer to export in PGN
 * starting new game
+* advantage is wrong when game restarts
 
 General
 * exporting in PGN
