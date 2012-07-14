@@ -1,7 +1,9 @@
 ChessBoardActivity
 * jump to move in scrollable list
-* saving and loading
+* offering draw
+* if game over, offer to export in PGN
 
 General
 * exporting in PGN
 * fix checkmate bug
+* repeated moves -> draw

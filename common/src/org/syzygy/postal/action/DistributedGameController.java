@@ -82,8 +82,8 @@ public final class DistributedGameController extends VisualGameController implem
     private void updateState(Move move)
     {
         state.startGame();
-        if (move.isResignation() || move.isCheckMate())
-            state.gameOver();
+        if (move.isGameEnding())
+            state.gameEnded();
     }
 
     public void sendMoveWithComment(Move m, String comment)
@@ -105,7 +105,7 @@ public final class DistributedGameController extends VisualGameController implem
 
     public boolean needsSave()
     {
-        return state.isGameStarted() && !state.isGameOver();
+        return state.isGameStarted() && !state.isGameEnded();
     }
 
     public void save(String name, Persistence rms)

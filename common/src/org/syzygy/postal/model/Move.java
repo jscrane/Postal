@@ -79,6 +79,11 @@ public final class Move
         return this == WHITE_RESIGNS || this == BLACK_RESIGNS;
     }
 
+    public boolean isGameEnding()
+    {
+        return isResignation() || isCheckMate();
+    }
+
     public String toString()
     {
         if (this == WHITE_RESIGNS)
