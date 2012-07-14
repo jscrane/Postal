@@ -12,7 +12,7 @@ import org.syzygy.postal.ui.MainDisplay;
 
 public final class AndroidMainDisplay implements MainDisplay
 {
-    public AndroidMainDisplay(TextView status, TextView advantage, final BoardView board, ArrayAdapter<String> moves, final MoveListener listener)
+    public AndroidMainDisplay(TextView status, TextView advantage, final BoardView board, ArrayAdapter<Round> moves, final MoveListener listener)
     {
         this.status = status;
         this.advantage = advantage;
@@ -82,23 +82,20 @@ public final class AndroidMainDisplay implements MainDisplay
     {
         int m = (n + 1) / 2;
         boolean white = (n % 2) != 0;
-        String ms;
         Colour colour;
+        Round round;
         if (white) {
             colour = Colour.BLACK;
             status.setText("Black to move");
-            ms = Integer.toString(m);
+            round = new Round(mv);
         } else {
             colour = Colour.WHITE;
             status.setText("White to move");
-            if (moves.getCount() > 0) {
-                ms = moves.getItem(moves.getCount() - 1);
-                moves.remove(ms);
-            } else
-                ms = Integer.toString(m) + "...";
+            round = moves.getItem(m - 1);
+            moves.remove(round);
+            round.black = mv;
         }
-        moves.add(ms + " " + mv.toString());
-        clearMove();
+        moves.add(round);
         board.setColour(colour);
         board.invalidate();
     }
@@ -112,6 +109,6 @@ public final class AndroidMainDisplay implements MainDisplay
     }
 
     private final TextView status, advantage;
-    private final ArrayAdapter<String> moves;
+    private final ArrayAdapter<Round> moves;
     private final BoardView board;
 }
