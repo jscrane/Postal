@@ -2,6 +2,7 @@ ChessBoardActivity
 * jump to move in scrollable list
 * offering draw
 * if game over, offer to export in PGN
+* starting new game
 
 General
 * exporting in PGN

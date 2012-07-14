@@ -15,32 +15,32 @@
                 a:layout_height="wrap_content"
                 a:layout_gravity="left"
                 a:gravity="left"
-                a:text="@string/copyright"
-                />
+                a:text="@string/copyright"/>
+
         <TextView
                 a:id="@+id/spacer"
                 a:layout_width="0dp"
                 a:layout_height="wrap_content"
                 a:layout_weight="1"/>
+
         <TextView
                 a:id="@id/advantage"
                 a:layout_width="wrap_content"
                 a:layout_height="wrap_content"
                 a:layout_gravity="right"
-                a:gravity="right"
-                />
+                a:gravity="right"/>
     </LinearLayout>
 
     <org.syzygy.postal.android.BoardView
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:id="@id/board"
-            />
+            a:id="@id/board"/>
 
     <ListView
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
-            a:id="@id/moves"
-            />
+            a:transcriptMode="alwaysScroll"
+            a:stackFromBottom="true"
+            a:id="@id/moves"/>
 
 </LinearLayout>

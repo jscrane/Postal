@@ -10,7 +10,13 @@
             a:layout_width="0dp"
             a:layout_height="wrap_content"
             a:layout_weight="5"
+            a:gravity="right"
             a:textSize="12dp"/>
+
+    <View
+            a:layout_width="0dp"
+            a:layout_height="wrap_content"
+            a:layout_weight="5"/>
 
     <TextView
             a:id="@+id/white"
@@ -30,7 +36,7 @@
             a:id="@+id/comment"
             a:layout_width="0dp"
             a:layout_height="wrap_content"
-            a:layout_weight="65"
+            a:layout_weight="60"
             a:textSize="12dp"/>
 
 </LinearLayout>
