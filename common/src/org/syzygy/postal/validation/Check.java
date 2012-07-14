@@ -57,6 +57,7 @@ public final class Check implements BoardValidator, BoardObserver
                         } catch (IllegalMoveException _) {
                             // can't move there
                         }
+            // TODO: need to check that can't interpose a piece
             move.setIsCheckMate(true);
         }
     }

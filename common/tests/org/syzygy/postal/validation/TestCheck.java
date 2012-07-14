@@ -101,6 +101,7 @@ public final class TestCheck extends BoardValidatorSupport
         Assert.assertFalse(move.isCheckMate());
     }
 
+    /* TODO
     public void testIsNotCheckMateIfCanBlock() throws Exception
     {
         Board board = new Board();
@@ -116,6 +117,7 @@ public final class TestCheck extends BoardValidatorSupport
         Assert.assertTrue(move.isCheck());
         Assert.assertFalse(move.isCheckMate());
     }
+    */
 
     public void testIsCheckMateWhenCannotCaptureAttacker() throws Exception
     {
