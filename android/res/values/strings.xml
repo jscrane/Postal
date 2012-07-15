@@ -2,4 +2,11 @@
 <resources>
     <string name="app_name">Postal</string>
     <string name="copyright">© 2008–2012 Stephen Crane</string>
+    <string name="new_game">New Game</string>
+    <string name="comment">Comment</string>
+    <string name="resign">Resign</string>
+    <string name="offer_draw">Offer Draw</string>
+    <string name="export_pgn">Export PGN</string>
+    <string name="black_move">Black\'s move</string>
+    <string name="white_move">White\'s move</string>
 </resources>

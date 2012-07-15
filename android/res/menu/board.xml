@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:a="http://schemas.android.com/apk/res/android">
+
+    <item a:id="@+id/new_game"
+          a:title="@string/new_game"/>
+
+    <item a:id="@+id/resign"
+          a:title="@string/resign"/>
+</menu>

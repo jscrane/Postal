@@ -34,6 +34,8 @@
     <org.syzygy.postal.android.BoardView
             a:layout_width="fill_parent"
             a:layout_height="wrap_content"
+            a:focusable="true"
+            a:focusableInTouchMode="true"
             a:id="@id/board"/>
 
     <ListView

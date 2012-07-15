@@ -1,11 +1,12 @@
 ChessBoardActivity
 * jump to move in scrollable list
+* resigning: display game over and don't allow move
 * offering draw
-* if game over, offer to export in PGN
-* starting new game
+* export in PGN
+* commenting
 * advantage is wrong when game restarts
 
 General
 * exporting in PGN
-* fix checkmate bug
+* fix checkmate bug (not checkmate if can interpose piece)
 * repeated moves -> draw
