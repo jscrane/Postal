@@ -1,6 +1,5 @@
 package org.syzygy.postal.ui.midp;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import javax.microedition.lcdui.Canvas;
@@ -12,7 +11,7 @@ public final class TestMoveEntry extends TestCase
         MoveEntry entry = new WhiteMoveEntry();
         entry.processActionKey(Canvas.UP);
         assertEquals("a1", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackInitialState()
@@ -20,7 +19,7 @@ public final class TestMoveEntry extends TestCase
         MoveEntry entry = new BlackMoveEntry();
         entry.processActionKey(Canvas.UP);
         assertEquals("h8", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testWhiteUp()
@@ -29,7 +28,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.UP);
         assertEquals("a2", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackUp()
@@ -38,7 +37,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.UP);
         assertEquals("h7", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testWhiteDown()
@@ -47,7 +46,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.DOWN);
         assertEquals("a8", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackDown()
@@ -56,7 +55,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.DOWN);
         assertEquals("h1", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testWhiteLeft()
@@ -65,7 +64,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.LEFT);
         assertEquals("h1", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackLeft()
@@ -74,7 +73,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.LEFT);
         assertEquals("a8", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testWhiteRight()
@@ -83,7 +82,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.RIGHT);
         assertEquals("b1", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackRight()
@@ -92,7 +91,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.RIGHT);
         assertEquals("g8", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testWhiteFire()
@@ -101,7 +100,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.FIRE);
         assertEquals("a1-a1", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testBlackFire()
@@ -110,7 +109,7 @@ public final class TestMoveEntry extends TestCase
         entry.processActionKey(Canvas.UP);
         entry.processActionKey(Canvas.FIRE);
         assertEquals("h8-h8", entry.toString());
-        Assert.assertFalse(entry.isComplete());
+        assertFalse(entry.isComplete());
     }
 
     public void testA1A2()
@@ -121,7 +120,7 @@ public final class TestMoveEntry extends TestCase
         entry.processKey('1');
         entry.processKey('2');
         assertEquals("a1-a2", entry.toString());
-        Assert.assertTrue(entry.isComplete());
+        assertTrue(entry.isComplete());
     }
 
     public void testClear()
@@ -141,7 +140,7 @@ public final class TestMoveEntry extends TestCase
         entry.processKey('2');
         entry.processActionKey(Canvas.UP);
         assertEquals("e2-e3", entry.toString());
-        Assert.assertTrue(entry.isComplete());
+        assertTrue(entry.isComplete());
     }
 
     public void testBlackE2Up()
@@ -151,7 +150,7 @@ public final class TestMoveEntry extends TestCase
         entry.processKey('2');
         entry.processActionKey(Canvas.UP);
         assertEquals("e2-e1", entry.toString());
-        Assert.assertTrue(entry.isComplete());
+        assertTrue(entry.isComplete());
     }
 
     public void testWhiteUpA4()
@@ -162,7 +161,7 @@ public final class TestMoveEntry extends TestCase
         entry.processKey('1');
         entry.processKey('4');
         assertEquals("a2-a4", entry.toString());
-        Assert.assertTrue(entry.isComplete());
+        assertTrue(entry.isComplete());
     }
 
     public void testBlackUpA4()
@@ -173,14 +172,14 @@ public final class TestMoveEntry extends TestCase
         entry.processKey('1');
         entry.processKey('4');
         assertEquals("h7-a4", entry.toString());
-        Assert.assertTrue(entry.isComplete());
+        assertTrue(entry.isComplete());
     }
 
     public void testGetSquareNone()
     {
         MoveEntry entry = new WhiteMoveEntry();
         entry.processKey('5');
-        Assert.assertNull(entry.getSquare());
+        assertNull(entry.getSquare());
     }
 
     public void testGetFirstSquare()

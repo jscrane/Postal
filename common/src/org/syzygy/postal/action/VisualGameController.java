@@ -15,6 +15,11 @@ public class VisualGameController extends GameController
         main.setGame(getBoard(), colour, colour == Colour.WHITE);
     }
 
+    public void resign()
+    {
+        move(main.getColour() == Colour.WHITE ? Move.WHITE_RESIGNS : Move.BLACK_RESIGNS);
+    }
+
     public int makeMoves(Enumeration moves)
     {
         int n;

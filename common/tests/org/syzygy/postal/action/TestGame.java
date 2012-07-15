@@ -31,9 +31,9 @@ public final class TestGame extends TestCase
         move("d7-d6");
         move("d2-d4");
         Move m = move("c5xd4");
-        Assert.assertTrue(m.isCapture());
+        assertTrue(m.isCapture());
         m = move("f3xd4");
-        Assert.assertTrue(m.isCapture());
+        assertTrue(m.isCapture());
         move("g8-f6");
         move("b1-c3");
     }
@@ -45,10 +45,10 @@ public final class TestGame extends TestCase
         int i = 0;
         for (Enumeration e = game.getMoves(); e.hasMoreElements(); i++) {
             Move m = (Move) e.nextElement();
-            Assert.assertEquals(moves[i], m.toString());
+            assertEquals(moves[i], m.toString());
         }
-        Assert.assertEquals(moves.length, i);
-        Assert.assertEquals(moves.length, game.getNumberOfMoves());
+        assertEquals(moves.length, i);
+        assertEquals(moves.length, game.getNumberOfMoves());
     }
 
     public void testKingCapturesQueen() throws Exception
@@ -58,20 +58,20 @@ public final class TestGame extends TestCase
         for (int i = 0; i < moves.length; i++) {
             System.out.println(game.getBoard().toString());
             System.out.println(moves[i]);
-            Assert.assertNotNull(move(moves[i]));
+            assertNotNull(move(moves[i]));
         }
     }
 
     public void testQueenExchange() throws Exception
     {
         move(new String[]{ "d2-d4", "d7-d5", "e2-e4", "e7-e5", "d4xe5", "d5xe4", "d1xd8", "e8xd8" });
-        Assert.assertEquals(Piece.king(Colour.BLACK), game.getBoard().get(new Square("d8")));
+        assertEquals(Piece.king(Colour.BLACK), game.getBoard().get(new Square("d8")));
     }
 
     private void move(String[] moves) throws IllegalMoveException
     {
         for (int i = 0; i < moves.length; i++)
-            Assert.assertNotNull(move(moves[i]));
+            assertNotNull(move(moves[i]));
     }
 
     private Move move(String m) throws IllegalMoveException

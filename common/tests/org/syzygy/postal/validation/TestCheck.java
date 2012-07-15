@@ -51,8 +51,8 @@ public final class TestCheck extends BoardValidatorSupport
         board.set(Piece.king(white), b1);
         Move move = move(a8, b8);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertFalse(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertFalse(move.isCheckMate());
     }
 
     public void testDisclosedCheck() throws Exception
@@ -66,8 +66,8 @@ public final class TestCheck extends BoardValidatorSupport
         check.validate(board, move);
         board.move(move);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertFalse(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertFalse(move.isCheckMate());
     }
 
     public void testCheckMate() throws Exception
@@ -82,8 +82,8 @@ public final class TestCheck extends BoardValidatorSupport
         check.validate(board, move);
         board.move(move);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertTrue(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertTrue(move.isCheckMate());
     }
 
     public void testIsNotCheckMateIfCanCaptureAttacker() throws Exception
@@ -97,8 +97,8 @@ public final class TestCheck extends BoardValidatorSupport
         check.validate(board, move);
         board.move(move);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertFalse(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertFalse(move.isCheckMate());
     }
 
     /* TODO
@@ -114,8 +114,8 @@ public final class TestCheck extends BoardValidatorSupport
         check.validate(board, move);
         board.move(move);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertFalse(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertFalse(move.isCheckMate());
     }
     */
 
@@ -130,18 +130,18 @@ public final class TestCheck extends BoardValidatorSupport
         check.validate(board, move);
         board.move(move);
         check.confirm(board, move);
-        Assert.assertTrue(move.isCheck());
-        Assert.assertTrue(move.isCheckMate());
+        assertTrue(move.isCheck());
+        assertTrue(move.isCheckMate());
     }
 
     public void testFindKing()
     {
         Board board = Board.create();
-        Assert.assertEquals(e8, Check.findKing(board, board.getPieces(Colour.BLACK)));
-        Assert.assertEquals(e1, Check.findKing(board, board.getPieces(Colour.WHITE)));
+        assertEquals(e8, Check.findKing(board, board.getPieces(Colour.BLACK)));
+        assertEquals(e1, Check.findKing(board, board.getPieces(Colour.WHITE)));
 
         Board empty = new Board();
-        Assert.assertNull(Check.findKing(empty, empty.getPieces(Colour.BLACK)));
+        assertNull(Check.findKing(empty, empty.getPieces(Colour.BLACK)));
     }
 
     private final Check check = new Check(new Validators());

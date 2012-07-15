@@ -1,6 +1,5 @@
 package org.syzygy.postal.validation;
 
-import junit.framework.Assert;
 import org.syzygy.postal.model.Board;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.model.Piece;
@@ -13,7 +12,7 @@ public final class TestValidationUtils extends BoardValidatorSupport
         board.set(Piece.rook(black), b8);
         board.set(Piece.rook(black), b1);
         board.set(Piece.pawn(white), b4);
-        Assert.assertTrue(utils.isAttacked(board, b4, board.getPieces(Colour.BLACK)));
+        assertTrue(utils.isAttacked(board, b4, board.getPieces(Colour.BLACK)));
     }
 
     public void testAttackerCount()
@@ -22,7 +21,7 @@ public final class TestValidationUtils extends BoardValidatorSupport
         board.set(Piece.rook(black), b8);
         board.set(Piece.rook(black), b1);
         board.set(Piece.pawn(white), b4);
-        Assert.assertEquals(2, utils.attackerCount(board, b4, board.getPieces(Colour.BLACK)));
+        assertEquals(2, utils.attackerCount(board, b4, board.getPieces(Colour.BLACK)));
     }
 
     private final ValidationUtils utils = new Validators();

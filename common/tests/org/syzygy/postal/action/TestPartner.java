@@ -1,6 +1,5 @@
 package org.syzygy.postal.action;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.syzygy.postal.io.AbstractTransport;
 import org.syzygy.postal.io.Completion;
@@ -19,7 +18,7 @@ public final class TestPartner extends TestCase
         for (int i = 0; i < white.length; i++)
             partner.send(white[i]);
         Thread.sleep(50);
-        Assert.assertTrue(transport.success());
+        assertTrue(transport.success());
     }
 
     public void testBlack() throws Exception
@@ -32,7 +31,7 @@ public final class TestPartner extends TestCase
         for (int i = 0; i < black.length; i++)
             partner.send(black[i]);
         Thread.sleep(50);
-        Assert.assertTrue(transport.success());
+        assertTrue(transport.success());
     }
 
     private final class DummyCallback implements PartnerCallback
@@ -45,9 +44,9 @@ public final class TestPartner extends TestCase
         public void onReceive(String move)
         {
             if (move == null)
-                Assert.assertEquals(expected.length, i);
+                assertEquals(expected.length, i);
             else {
-                Assert.assertEquals(expected[i], move);
+                assertEquals(expected[i], move);
                 i++;
             }
         }
@@ -104,7 +103,7 @@ public final class TestPartner extends TestCase
 
         public void send(String message) throws IOException
         {
-            Assert.assertEquals(toSend[s++], message);
+            assertEquals(toSend[s++], message);
         }
 
         public String receive() throws IOException
