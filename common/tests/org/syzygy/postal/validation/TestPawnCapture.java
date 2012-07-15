@@ -1,6 +1,5 @@
 package org.syzygy.postal.validation;
 
-import junit.framework.Assert;
 import org.syzygy.postal.model.Board;
 import org.syzygy.postal.model.Piece;
 
@@ -32,7 +31,7 @@ public final class TestPawnCapture extends BoardValidatorSupport
         board.set(Piece.pawn(white), d5);
         try {
             validator.validate(board, move(d6, d5));
-            Assert.fail("IllegalMoveException not thrown");
+            fail("IllegalMoveException not thrown");
         } catch (IllegalMoveException _) {
         }
     }
@@ -43,7 +42,7 @@ public final class TestPawnCapture extends BoardValidatorSupport
         board.set(Piece.pawn(white), b4);
         try {
             validator.validate(board, move(b4, d6));
-            Assert.fail("IllegalMoveException not thrown");
+            fail("IllegalMoveException not thrown");
         } catch (IllegalMoveException _) {
         }
     }

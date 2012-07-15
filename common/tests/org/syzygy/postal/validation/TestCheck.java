@@ -1,6 +1,5 @@
 package org.syzygy.postal.validation;
 
-import junit.framework.Assert;
 import org.syzygy.postal.model.Board;
 import org.syzygy.postal.model.Colour;
 import org.syzygy.postal.model.Move;
@@ -15,7 +14,7 @@ public final class TestCheck extends BoardValidatorSupport
         board.set(Piece.king(white), b1);
         try {
             check.validate(board, move(b1, a1));
-            Assert.fail("IllegalMoveException not thrown");
+            fail("IllegalMoveException not thrown");
         } catch (IllegalMoveException _) {
         }
     }
@@ -29,7 +28,7 @@ public final class TestCheck extends BoardValidatorSupport
         board.set(Piece.king(black), h8);
         try {
             check.validate(board, move(e2, e4));
-            Assert.fail("IllegalMoveException not thrown");
+            fail("IllegalMoveException not thrown");
         } catch (IllegalMoveException _) {
         }
     }
