@@ -9,4 +9,6 @@
     <string name="export_pgn">Export PGN</string>
     <string name="black_move">Black\'s move</string>
     <string name="white_move">White\'s move</string>
+    <string name="black_resigns">Black resigns</string>
+    <string name="white_resigns">White resigns</string>
 </resources>

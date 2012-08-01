@@ -21,8 +21,10 @@ public final class AndroidMainDisplay implements MainDisplay
         this.advantage = advantage;
         this.board = board;
         this.moves = moves;
-        statuses.put(Colour.BLACK, context.getString(R.string.black_move));
-        statuses.put(Colour.WHITE, context.getString(R.string.white_move));
+        statuses.put(R.string.black_move, context.getString(R.string.black_move));
+        statuses.put(R.string.black_resigns, context.getString(R.string.black_resigns));
+        statuses.put(R.string.white_move, context.getString(R.string.white_move));
+        statuses.put(R.string.white_resigns, context.getString(R.string.white_resigns));
     }
 
     public void setAdvantage(int a)
@@ -67,22 +69,21 @@ public final class AndroidMainDisplay implements MainDisplay
             round.black = mv;
         }
         moves.add(round);
-        setStatusForColour(colour);
-        board.setColour(colour);
-        board.invalidate();
-    }
-
-    private void setStatusForColour(Colour colour)
-    {
-        board.setColour(colour);
-        status.setText(statuses.get(colour));
+        if (mv.isResignation())
+            status.setText(statuses.get(colour == Colour.WHITE ? R.string.black_resigns : R.string.white_resigns));
+        else {
+            status.setText(statuses.get(colour == Colour.WHITE ? R.string.black_move : R.string.white_move));
+            board.setColour(colour);
+            board.invalidate();
+        }
     }
 
     public void setGame(Board b, Colour colour, boolean isMyTurn)
     {
         moves.clear();
         board.setBoard(b);
-        setStatusForColour(colour);
+        board.setColour(colour);
+        status.setText(statuses.get(colour == Colour.WHITE ? R.string.white_move : R.string.black_move));
         setIsMyTurn(isMyTurn);
         board.invalidate();
     }
@@ -90,5 +91,5 @@ public final class AndroidMainDisplay implements MainDisplay
     private final TextView status, advantage;
     private final ArrayAdapter<Round> moves;
     private final BoardView board;
-    private final Map<Colour, String> statuses = new HashMap<Colour, String>();
+    private final Map<Integer, String> statuses = new HashMap<Integer, String>();
 }

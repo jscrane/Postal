@@ -60,17 +60,19 @@ public class Validators implements BoardValidator, BoardObserver, ValidationUtil
     public void validate(Board board, Move move) throws IllegalMoveException
     {
         turn.validate(board, move);
-        runValidation(board, move);
+        if (!move.isResignation())
+            runValidation(board, move);
     }
 
     public void confirm(Board board, Move move)
     {
         turn.confirm(board, move);
-        for (Enumeration e = validators.elements(); e.hasMoreElements(); ) {
-            Object o = e.nextElement();
-            if (o instanceof BoardObserver)
-                ((BoardObserver) o).confirm(board, move);
-        }
+        if (!move.isResignation())
+            for (Enumeration e = validators.elements(); e.hasMoreElements(); ) {
+                Object o = e.nextElement();
+                if (o instanceof BoardObserver)
+                    ((BoardObserver) o).confirm(board, move);
+            }
     }
 
     private final TurnValidator turn = new TurnValidator();

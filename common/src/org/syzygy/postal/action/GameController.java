@@ -20,17 +20,16 @@ public class GameController
 
     public Move validate(Move move) throws IllegalMoveException
     {
-        if (!move.isResignation())
-            validation.validate(board, move);
+        validation.validate(board, move);
         return move;
     }
 
     public void complete(Move move)
     {
-        if (!move.isResignation()) {
+        if (!move.isResignation())
             board.move(move);
-            validation.confirm(board, move);
-        }
+
+        validation.confirm(board, move);
         moves.addElement(move);
     }
 

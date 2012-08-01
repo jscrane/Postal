@@ -1,8 +1,6 @@
 ChessBoardActivity
 * jump to move in scrollable list
-* resigning: display game over and don't allow move
 * offering draw
-* export in PGN
 * commenting
 * advantage is wrong when game restarts
 
